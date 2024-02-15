@@ -18,6 +18,10 @@ config/icon="res://icon.svg"
 
 project/assembly_name="Main Taiming"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/kanban_tasks/plugin.cfg")
+
 [rendering]
 
 renderer/rendering_method="mobile"

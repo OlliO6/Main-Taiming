@@ -1,0 +1,132 @@
+{
+	"categories": [
+		{
+			"uuid": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"title": "Task",
+			"color": "70bafa"
+		}
+	],
+	"stages": [
+		{
+			"uuid": "050f6bf0-a900-45ce-a0f6-e8c406d10fb8",
+			"title": "Todo",
+			"tasks": [
+				"b1f4636b-5d40-47e6-81dd-72405d98459a",
+				"3615ae91-deed-45b6-aab0-c5ed15339452",
+				"c2a719ad-eb31-4bb3-99cb-03311bc822cb"
+			]
+		},
+		{
+			"uuid": "743dd046-28fd-4383-87d0-6da2bdadbaf2",
+			"title": "Doing",
+			"tasks": [
+				"1a922e74-4c58-4b82-a368-118d2dd2753f"
+			]
+		},
+		{
+			"uuid": "1f904d32-da8c-4043-b384-a3be136cc215",
+			"title": "Done",
+			"tasks": []
+		},
+		{
+			"uuid": "7061cc17-fa6d-43bd-bf6b-de001af21de3",
+			"title": "Ideas",
+			"tasks": []
+		},
+		{
+			"uuid": "ed1b883c-c197-4ab9-b785-59b10ac0986e",
+			"title": "Approved Ideas",
+			"tasks": []
+		},
+		{
+			"uuid": "77e17a73-7f7c-4a33-9135-b52cc775dea0",
+			"title": "Implemented Ideas",
+			"tasks": []
+		}
+	],
+	"tasks": [
+		{
+			"uuid": "1a922e74-4c58-4b82-a368-118d2dd2753f",
+			"title": "Player",
+			"description": "",
+			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"steps": [
+				{
+					"details": "Movement",
+					"done": false
+				},
+				{
+					"details": "Art",
+					"done": false
+				},
+				{
+					"details": "Carrot shooting",
+					"done": false
+				}
+			]
+		},
+		{
+			"uuid": "b1f4636b-5d40-47e6-81dd-72405d98459a",
+			"title": "Enemies",
+			"description": "",
+			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"steps": []
+		},
+		{
+			"uuid": "3615ae91-deed-45b6-aab0-c5ed15339452",
+			"title": "Monsters",
+			"description": "",
+			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"steps": [
+				{
+					"details": "Taiming",
+					"done": false
+				},
+				{
+					"details": "Ai",
+					"done": false
+				},
+				{
+					"details": "Variations",
+					"done": false
+				}
+			]
+		},
+		{
+			"uuid": "c2a719ad-eb31-4bb3-99cb-03311bc822cb",
+			"title": "Gameplayloop",
+			"description": "",
+			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"steps": [
+				{
+					"details": "Tame",
+					"done": false
+				},
+				{
+					"details": "Fight",
+					"done": false
+				},
+				{
+					"details": "Heal/Combine",
+					"done": false
+				}
+			]
+		}
+	],
+	"layout": {
+		"columns": [
+			[
+				"050f6bf0-a900-45ce-a0f6-e8c406d10fb8",
+				"7061cc17-fa6d-43bd-bf6b-de001af21de3"
+			],
+			[
+				"743dd046-28fd-4383-87d0-6da2bdadbaf2",
+				"ed1b883c-c197-4ab9-b785-59b10ac0986e"
+			],
+			[
+				"1f904d32-da8c-4043-b384-a3be136cc215",
+				"77e17a73-7f7c-4a33-9135-b52cc775dea0"
+			]
+		]
+	}
+}
