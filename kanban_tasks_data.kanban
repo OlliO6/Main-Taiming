@@ -4,6 +4,11 @@
 			"uuid": "d10394df-6562-4252-b8be-76436af5a0c4",
 			"title": "Task",
 			"color": "70bafa"
+		},
+		{
+			"uuid": "c911d71f-a415-400f-a227-31dc823499e3",
+			"title": "High Prio",
+			"color": "e1141e"
 		}
 	],
 	"stages": [
@@ -13,7 +18,8 @@
 			"tasks": [
 				"b1f4636b-5d40-47e6-81dd-72405d98459a",
 				"3615ae91-deed-45b6-aab0-c5ed15339452",
-				"c2a719ad-eb31-4bb3-99cb-03311bc822cb"
+				"c2a719ad-eb31-4bb3-99cb-03311bc822cb",
+				"f846b7f6-b853-4304-b56c-54342e9ad606"
 			]
 		},
 		{
@@ -49,11 +55,11 @@
 			"uuid": "1a922e74-4c58-4b82-a368-118d2dd2753f",
 			"title": "Player",
 			"description": "",
-			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"category": "c911d71f-a415-400f-a227-31dc823499e3",
 			"steps": [
 				{
 					"details": "Movement",
-					"done": false
+					"done": true
 				},
 				{
 					"details": "Art",
@@ -69,14 +75,14 @@
 			"uuid": "b1f4636b-5d40-47e6-81dd-72405d98459a",
 			"title": "Enemies",
 			"description": "",
-			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"category": "c911d71f-a415-400f-a227-31dc823499e3",
 			"steps": []
 		},
 		{
 			"uuid": "3615ae91-deed-45b6-aab0-c5ed15339452",
 			"title": "Monsters",
 			"description": "",
-			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"category": "c911d71f-a415-400f-a227-31dc823499e3",
 			"steps": [
 				{
 					"details": "Taiming",
@@ -96,7 +102,7 @@
 			"uuid": "c2a719ad-eb31-4bb3-99cb-03311bc822cb",
 			"title": "Gameplayloop",
 			"description": "",
-			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"category": "c911d71f-a415-400f-a227-31dc823499e3",
 			"steps": [
 				{
 					"details": "Tame",
@@ -111,6 +117,13 @@
 					"done": false
 				}
 			]
+		},
+		{
+			"uuid": "f846b7f6-b853-4304-b56c-54342e9ad606",
+			"title": "Art",
+			"description": "",
+			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"steps": []
 		}
 	],
 	"layout": {
