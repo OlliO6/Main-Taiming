@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c076y8slf1upt"]
+[gd_scene load_steps=10 format=3 uid="uid://c076y8slf1upt"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_y2mtw"]
 [ext_resource type="Texture2D" uid="uid://clu0ve7b55kob" path="res://player/player.png" id="2_wip1v"]
+[ext_resource type="Script" path="res://player/item_holder.gd" id="3_tmjgv"]
+[ext_resource type="Script" path="res://player/item_throwing.gd" id="5_ps5f2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e81ku"]
 radius = 5.0
@@ -147,6 +149,24 @@ shape = SubResource("CircleShape2D_e81ku")
 position = Vector2(0, -6)
 texture = ExtResource("2_wip1v")
 hframes = 2
+
+[node name="ItemHolder" type="Node2D" parent="Sprite"]
+unique_name_in_owner = true
+position = Vector2(3, 3)
+script = ExtResource("3_tmjgv")
+
+[node name="GiveVegetableTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+autostart = true
+
+[node name="ItemThrowing" type="Node2D" parent="."]
+position = Vector2(0, -2)
+script = ExtResource("5_ps5f2")
+shoot_strenght = 50.0
+
+[node name="ThrowDelayTimer" type="Timer" parent="ItemThrowing"]
+wait_time = 0.5
+one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
