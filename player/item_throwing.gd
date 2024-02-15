@@ -24,6 +24,7 @@ func shoot() -> void:
 	
 	shoot_delay_timer.start()
 	item_holder.release_item(false)
+	item.global_position = global_position
 	var mouse_pos: Vector2 = get_global_mouse_position();
 	item.look_at(mouse_pos);
 	if item.global_position.x > mouse_pos.x:

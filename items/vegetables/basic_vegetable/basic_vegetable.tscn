@@ -16,11 +16,13 @@ func _ready() -> void:
 "
 
 [node name="Vegetable" type="RigidBody2D"]
-collision_layer = 4
-mass = 0.2
+collision_layer = 12
+mass = 0.3
 gravity_scale = 0.0
+linear_damp = 1.4
 script = ExtResource("1_1sda5")
 is_basic_vegetable = true
+no_pick_velocity = 5.0
 
 [node name="Item" type="Node" parent="."]
 script = ExtResource("2_uh5n1")

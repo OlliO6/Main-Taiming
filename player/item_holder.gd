@@ -9,8 +9,8 @@ func _ready() -> void:
 	item_released.connect(func(i):
 		give_vegetable_timer.start())
 	give_vegetable_timer.timeout.connect(func():
-		try_pick_new_basic_vegetable()
-		give_vegetable_timer.stop())
+		if try_pick_new_basic_vegetable():
+			give_vegetable_timer.stop())
 
 func is_holding_item() -> bool:
 	return get_child_count() > 0
@@ -63,12 +63,13 @@ func pick_up_item(item: Node2D) -> void:
 	if item_interface:
 		item_interface._picked()
 
-func try_pick_new_basic_vegetable() -> void:
+func try_pick_new_basic_vegetable() -> bool:
 	if is_holding_item():
-		return
+		return false
 	
 	if Globals.vegetable_count < 1:
-		return
+		return false
 		
 	Globals.vegetable_count -= 1
 	pick_up_item(Globals.BASIC_VEGETABLE_SCENE.instantiate())
+	return true

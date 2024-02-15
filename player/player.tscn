@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://c076y8slf1upt"]
+[gd_scene load_steps=12 format=3 uid="uid://c076y8slf1upt"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_y2mtw"]
 [ext_resource type="Texture2D" uid="uid://clu0ve7b55kob" path="res://player/player.png" id="2_wip1v"]
 [ext_resource type="Script" path="res://player/item_holder.gd" id="3_tmjgv"]
+[ext_resource type="Script" path="res://player/pickup_area.gd" id="5_7nigq"]
 [ext_resource type="Script" path="res://player/item_throwing.gd" id="5_ps5f2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e81ku"]
-radius = 5.0
+radius = 4.0
 
 [sub_resource type="Animation" id="Animation_0bxpm"]
 resource_name = "idle"
@@ -136,6 +137,9 @@ _data = {
 "run": SubResource("Animation_a85c1")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_s30ou"]
+radius = 7.0
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 motion_mode = 1
@@ -173,3 +177,15 @@ libraries = {
 "": SubResource("AnimationLibrary_ai3uf")
 }
 blend_times = [&"idle", &"idle", 0.2, &"idle", &"run", 0.2]
+
+[node name="PickupArea2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("5_7nigq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea2D"]
+shape = SubResource("CircleShape2D_s30ou")
+
+[connection signal="body_entered" from="PickupArea2D" to="PickupArea2D" method="_on_body_entered"]
+[connection signal="body_exited" from="PickupArea2D" to="PickupArea2D" method="_on_body_exited"]
