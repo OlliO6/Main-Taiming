@@ -24,6 +24,10 @@ func shoot() -> void:
 	
 	shoot_delay_timer.start()
 	item_holder.release_item(false)
-	var mousePos: Vector2 = get_global_mouse_position();
-	item.look_at(mousePos);
-	throwable.throw_item(item.transform.x * shoot_strenght)
+	var mouse_pos: Vector2 = get_global_mouse_position();
+	item.look_at(mouse_pos);
+	if item.global_position.x > mouse_pos.x:
+		item.scale = Vector2(-1, -1);
+		throwable.throw_item(-item.transform.x * shoot_strenght)
+	else:
+		throwable.throw_item(item.transform.x * shoot_strenght)

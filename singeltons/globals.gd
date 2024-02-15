@@ -1,6 +1,6 @@
 class_name Globals
 extends Node
 
-const BASIC_VEGETABLE_SCENE: PackedScene = preload("res://vegetable/basic_vegetable.tscn")
+const BASIC_VEGETABLE_SCENE: PackedScene = preload("res://items/vegetables/basic_vegetable/basic_vegetable.tscn")
 
-static  var vegetable_count: int = 10
+static var vegetable_count: int = 10

@@ -12,13 +12,6 @@ func _ready() -> void:
 		try_pick_new_basic_vegetable()
 		give_vegetable_timer.stop())
 
-func _process(delta: float) -> void:
-	
-	var item:= get_item()
-	# force the item into position
-	if item:
-		item.transform = Transform2D.IDENTITY
-
 func is_holding_item() -> bool:
 	return get_child_count() > 0
 
@@ -53,6 +46,9 @@ func release_item(free_basic_vegetables: bool) -> Node2D:
 	item.position = owner.global_position
 	get_tree().current_scene.add_child(item)
 	item_released.emit(item)
+	var item_interface = item.get_node_or_null("Item")
+	if item_interface:
+		item_interface._released()
 	return item
 
 func pick_up_item(item: Node2D) -> void:
@@ -63,6 +59,9 @@ func pick_up_item(item: Node2D) -> void:
 		parent.remove_child(item)
 	item.position = Vector2.ZERO
 	add_child(item)
+	var item_interface = item.get_node_or_null("Item")
+	if item_interface:
+		item_interface._picked()
 
 func try_pick_new_basic_vegetable() -> void:
 	if is_holding_item():

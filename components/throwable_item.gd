@@ -1,5 +1,5 @@
 class_name ThrowableItem
-extends Item
+extends Node
 
 signal item_thrown(force: Vector2)
 
