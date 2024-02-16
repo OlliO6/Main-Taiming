@@ -1,18 +1,28 @@
 extends Node
 
 signal team_changed
+signal vegetable_count_changed
 
 enum GameState { FIGHT, PREPERATION }
 
 const BASIC_VEGETABLE_SCENE: PackedScene = preload("res://items/vegetables/basic_vegetable/basic_vegetable.tscn")
 
 var player: Player
-var vegetable_count: int = 10
+
+var vegetable_count: int = 10:
+	set(v):
+		vegetable_count_changed.emit()
+		vegetable_count = v
+	get: 
+		return vegetable_count
 
 var max_team: int = 3
 var team:= [] as Array[Monster]
 
 var game_state: GameState = GameState.PREPERATION
+
+func _process(delta: float) -> void:
+	print(vegetable_count)
 
 func is_team_full() -> bool:
 	return team.size() >= max_team

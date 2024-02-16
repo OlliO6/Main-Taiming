@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var movement_speed: float
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var item_holder:= %ItemHolder as ItemHolder
 
 func _ready() -> void:
 	Globals.player = self

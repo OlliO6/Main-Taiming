@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwlnn5fwd7frh"]
+
+[ext_resource type="Texture2D" uid="uid://rytivivid0vk" path="res://items/vegetables/basic_vegetable/basic_vegetables.png" id="1_hawia"]
+[ext_resource type="Script" path="res://ui/ingame/ingame_overlay.gd" id="1_yiok6"]
+
+[node name="IngameOverlay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_yiok6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 31.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Control" type="Control" parent="HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/HBoxContainer/Control"]
+texture_filter = 1
+position = Vector2(8, 10)
+scale = Vector2(2, 2)
+texture = ExtResource("1_hawia")
+hframes = 2
+vframes = 2
+
+[node name="VegetablesAmountLabel" type="Label" parent="HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "28"

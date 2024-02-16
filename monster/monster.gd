@@ -34,6 +34,8 @@ func _ready() -> void:
 	
 	interactable_interface.allow_interaction = func() -> bool:
 		return state_machine.state == taming_phase_2_state || state_machine.state == preperation_state
+	
+	Globals.team_changed.connect(_on_team_changed)
 
 func is_in_team() -> bool:
 	return self in Globals.team
@@ -74,16 +76,20 @@ func _set_outline_color(color: Color, save: bool) -> void:
 		_outline_color = color
 	sprite.material.set("shader_parameter/color", color)
 
+func _on_team_changed() -> void:
+	if is_in_team():
+		_set_outline_color(in_team_outline_color, true)
+	elif _outline_color == in_team_outline_color:
+		_set_outline_color(Color(0, 0, 0, 0), true)
+
 func _on_interacted() -> void:
 	if state_machine.state == taming_phase_2_state:
 		finish_tame()
 	elif state_machine.state == preperation_state:
 		if is_in_team():
 			Globals.remove_from_team(self)
-			_set_outline_color(Color(0, 0, 0, 0), true)
 		else:
 			Globals.add_to_team(self)
-			_set_outline_color(in_team_outline_color, true)
 		interact_label.text = _get_interact_label_text()
 
 func _on_interact_area_body_entered(body: Node2D) -> void:

@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cgrh1rjccylef"]
+[gd_scene load_steps=9 format=3 uid="uid://cgrh1rjccylef"]
 
+[ext_resource type="PackedScene" uid="uid://cwlnn5fwd7frh" path="res://ui/ingame/ingame_overlay.tscn" id="1_lnhvx"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_r4gmu"]
 [ext_resource type="PackedScene" uid="uid://c076y8slf1upt" path="res://player/player.tscn" id="2_5idx6"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="3_vcs8i"]
@@ -15,6 +16,10 @@ ease = 2
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="IngameOverlay" parent="CanvasLayer" instance=ExtResource("1_lnhvx")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)

@@ -2,6 +2,7 @@ class_name ItemHolder
 extends Node2D
 
 signal item_released(item: Node2D)
+signal item_picked(item: Node2D)
 
 @onready var give_vegetable_timer: Timer = %GiveVegetableTimer
 
@@ -62,6 +63,7 @@ func pick_up_item(item: Node2D) -> void:
 	var item_interface = item.get_node_or_null("Item")
 	if item_interface:
 		item_interface._picked()
+	item_picked.emit(item)
 
 func try_pick_new_basic_vegetable() -> bool:
 	if is_holding_item():
