@@ -13,3 +13,7 @@ func _ready() -> void:
 func on_pickup() -> void:
 	Globals.vegetable_count += vegetables_count
 	queue_free()
+
+func consume() -> void:
+	get_parent().remove_child(self)
+	queue_free()

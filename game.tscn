@@ -13,6 +13,7 @@ transition = 1
 ease = 2
 
 [node name="Game" type="Node2D"]
+y_sort_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
@@ -46,4 +47,3 @@ inactive_update_mode = 0
 
 [node name="TestMonster" parent="." instance=ExtResource("5_vnat6")]
 position = Vector2(45, -17)
-vegetables_needed = null

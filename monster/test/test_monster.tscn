@@ -1,15 +1,146 @@
-[gd_scene load_steps=11 format=3 uid="uid://cwffmeeyd6sgu"]
+[gd_scene load_steps=25 format=3 uid="uid://cwffmeeyd6sgu"]
 
+[ext_resource type="Shader" path="res://shader/sheet_outline.gdshader" id="1_bxdlx"]
 [ext_resource type="Script" path="res://monster/monster.gd" id="1_e686l"]
-[ext_resource type="Texture2D" uid="uid://bvysaumy30pub" path="res://icon.svg" id="2_ioluv"]
 [ext_resource type="Script" path="res://components/state_machine.gd" id="2_wxuav"]
 [ext_resource type="Script" path="res://components/state.gd" id="3_4420w"]
+[ext_resource type="Script" path="res://components/health.gd" id="3_xunb3"]
+[ext_resource type="Texture2D" uid="uid://bh201qypfnlf7" path="res://monster/monster.png" id="4_wbmr4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m1f0r"]
+shader = ExtResource("1_bxdlx")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 1
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/number_of_images = Vector2(1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_db0ey"]
-size = Vector2(32.4324, 26.2162)
+size = Vector2(12.1081, 9)
+
+[sub_resource type="Shader" id="Shader_ojmv1"]
+code = "/*
+https://godotshaders.com/shader/2d-outline-inline-configured-for-sprite-sheets/
+*/
+
+shader_type canvas_item;
+
+uniform vec4 color : source_color = vec4(1.0);
+uniform float width : hint_range(0, 10) = 1.0;
+uniform int pattern : hint_range(0, 2) = 0; // diamond, circle, square
+uniform bool inside = false;
+uniform bool add_margins = true; // only useful when inside is false
+uniform vec2 number_of_images = vec2(1.0); // number of horizontal and vertical images in the sprite sheet
+
+void vertex() {
+	if (add_margins) {
+		VERTEX += sign(VERTEX) * width; // replace `sign(VERTEX)` by `sign(VERTEX * 2.0 - 1.0)` if not centered
+	}
+}
+
+bool hasContraryNeighbour(vec2 uv, vec2 texture_pixel_size, vec2 image_top_left, vec2 image_bottom_right, sampler2D texture) {
+	for (float i = -ceil(width); i <= ceil(width); i++) {
+		float x = abs(i) > width ? width * sign(i) : i;
+		float offset;
+
+		if (pattern == 0) {
+			offset = width - abs(x);
+		} else if (pattern == 1) {
+			offset = floor(sqrt(pow(width + 0.5, 2) - x * x));
+		} else if (pattern == 2) {
+			offset = width;
+		}
+
+		for (float j = -ceil(offset); j <= ceil(offset); j++) {
+			float y = abs(j) > offset ? offset * sign(j) : j;
+			vec2 xy = uv + texture_pixel_size * vec2(x, y);
+
+			if ((xy != clamp(xy, image_top_left, image_bottom_right) || texture(texture, xy).a <= 0.0) == inside) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+void fragment() {
+	vec2 uv = UV;
+	vec2 image_top_left = floor(uv * number_of_images) / number_of_images;
+	vec2 image_bottom_right = image_top_left + vec2(1.0) / number_of_images;
+
+	if (add_margins) {
+		vec2 texture_pixel_size = vec2(1.0) / (vec2(1.0) / TEXTURE_PIXEL_SIZE + vec2(width * 2.0) * number_of_images);
+
+		uv = (uv - texture_pixel_size * width - image_top_left) * TEXTURE_PIXEL_SIZE / texture_pixel_size + image_top_left;
+
+		if (uv != clamp(uv, image_top_left, image_bottom_right)) {
+			COLOR.a = 0.0;
+		} else {
+			COLOR = texture(TEXTURE, uv);
+		}
+	} else {
+		COLOR = texture(TEXTURE, uv);
+	}
+
+	if ((COLOR.a > 0.0) == inside && hasContraryNeighbour(uv, TEXTURE_PIXEL_SIZE, image_top_left, image_bottom_right, TEXTURE)) {
+		COLOR.rgb = inside ? mix(COLOR.rgb, color.rgb, color.a) : color.rgb;
+		COLOR.a += (1.0 - COLOR.a) * color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nut2t"]
+shader = SubResource("Shader_ojmv1")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 1
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/number_of_images = Vector2(1, 1)
+
+[sub_resource type="Animation" id="Animation_4lvg5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_kxoce"]
 resource_name = "idle"
+length = 2.5
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -34,6 +165,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.1, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.05, 0.95), Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_4oew6"]
@@ -64,48 +207,90 @@ tracks/1/keys = {
 "update": 0,
 "values": [0.0, -0.174533, 0.0, 0.174533, 0.0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
-[sub_resource type="Animation" id="Animation_4lvg5"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_uolog"]
+resource_name = "feeded"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:skew")
+tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.5),
+"transitions": PackedFloat32Array(1.62451, 2, 1),
 "update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"values": [Vector2(1, 1), Vector2(0.8, 1.2), Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b7nvd"]
 _data = {
 "RESET": SubResource("Animation_4lvg5"),
+"feeded": SubResource("Animation_uolog"),
 "idle": SubResource("Animation_kxoce"),
 "run": SubResource("Animation_4oew6")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p6ptm"]
+animation = &"run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nv6kw"]
+animation = &"feeded"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7yc8n"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_lxaf2"]
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_pdgt1"]
+filters = ["Sprite:rotation", "Sprite:scale", "Sprite:skew"]
+mix_mode = 1
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_k2he7"]
+graph_offset = Vector2(-262.208, -33.7456)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_7yc8n")
+nodes/Animation/position = Vector2(-160, 0)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_p6ptm")
+"nodes/Animation 2/position" = Vector2(-160, 140)
+"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_nv6kw")
+"nodes/Animation 3/position" = Vector2(140, 200)
+nodes/Blend2/node = SubResource("AnimationNodeBlend2_lxaf2")
+nodes/Blend2/position = Vector2(0, 20)
+nodes/OneShot/node = SubResource("AnimationNodeOneShot_pdgt1")
+nodes/OneShot/position = Vector2(320, 100)
+nodes/output/position = Vector2(560, 140)
+node_connections = [&"Blend2", 0, &"Animation", &"Blend2", 1, &"Animation 2", &"OneShot", 0, &"Blend2", &"OneShot", 1, &"Animation 3", &"output", 0, &"OneShot"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wu04j"]
-size = Vector2(38, 32)
+size = Vector2(23, 18.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4hu0g"]
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_ec72f"]
+font_size = 8
 
 [node name="TestMonster" type="CharacterBody2D"]
+material = SubResource("ShaderMaterial_m1f0r")
 collision_layer = 16
 script = ExtResource("1_e686l")
-vegetables_needed = null
+tame_outline_color = Color(0.760784, 0.827451, 0.407843, 1)
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_xunb3")
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("2_wxuav")
@@ -117,46 +302,69 @@ script = ExtResource("3_4420w")
 [node name="TamingPhase2" type="Node" parent="StateMachine"]
 script = ExtResource("3_4420w")
 
+[node name="Preperation" type="Node" parent="StateMachine"]
+script = ExtResource("3_4420w")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3.10811)
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_db0ey")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(0, -1)
-scale = Vector2(0.275, 0.275)
-texture = ExtResource("2_ioluv")
+material = SubResource("ShaderMaterial_nut2t")
+position = Vector2(0, -5)
+texture = ExtResource("4_wbmr4")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_b7nvd")
 }
+autoplay = "idle"
+playback_default_blend_time = 0.2
 
-[node name="FeedingArea" type="Area2D" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_b7nvd")
+}
+tree_root = SubResource("AnimationNodeBlendTree_k2he7")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Blend2/blend_amount = 0.0
+parameters/OneShot/active = false
+parameters/OneShot/internal_active = false
+parameters/OneShot/request = 0
+
+[node name="InteractArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 14
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FeedingArea"]
-position = Vector2(0, 3)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_wu04j")
 
-[node name="TameLabel" type="Label" parent="."]
+[node name="InteractLabel" type="Label" parent="."]
 visible = false
 offset_left = -41.0
-offset_top = 16.0
+offset_top = 1.0
 offset_right = 41.0
-offset_bottom = 39.0
+offset_bottom = 24.0
 text = "'e' to tame"
+label_settings = SubResource("LabelSettings_4hu0g")
+horizontal_alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
-offset_left = -26.0
-offset_top = 16.0
-offset_right = 26.0
-offset_bottom = 23.0
-min_value = 0.06
-max_value = 1.0
-value = 0.06
-show_percentage = false
+[node name="HealthLabel" type="Label" parent="."]
+visible = false
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 3.0
+text = "5/10"
+label_settings = SubResource("LabelSettings_ec72f")
+horizontal_alignment = 1
 
+[connection signal="health_changed" from="Health" to="." method="_on_health_changed"]
+[connection signal="state_switched" from="StateMachine" to="." method="_on_state_switched"]
+[connection signal="state_entered" from="StateMachine/TamingPhase1" to="." method="_on_taming_phase_1_state_entered"]
 [connection signal="state_entered" from="StateMachine/TamingPhase2" to="." method="_on_taming_phase_2_state_entered"]
-[connection signal="body_entered" from="FeedingArea" to="." method="_on_feeding_area_body_entered"]
+[connection signal="state_entered" from="StateMachine/Preperation" to="." method="_on_preperation_state_entered"]
+[connection signal="body_entered" from="InteractArea" to="." method="_on_interact_area_body_entered"]
+[connection signal="body_exited" from="InteractArea" to="." method="_on_interact_area_body_exited"]

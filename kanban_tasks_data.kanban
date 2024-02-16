@@ -17,7 +17,6 @@
 			"title": "Todo",
 			"tasks": [
 				"b1f4636b-5d40-47e6-81dd-72405d98459a",
-				"c2a719ad-eb31-4bb3-99cb-03311bc822cb",
 				"f846b7f6-b853-4304-b56c-54342e9ad606"
 			]
 		},
@@ -25,7 +24,8 @@
 			"uuid": "743dd046-28fd-4383-87d0-6da2bdadbaf2",
 			"title": "Doing",
 			"tasks": [
-				"3615ae91-deed-45b6-aab0-c5ed15339452"
+				"3615ae91-deed-45b6-aab0-c5ed15339452",
+				"c2a719ad-eb31-4bb3-99cb-03311bc822cb"
 			]
 		},
 		{
@@ -87,7 +87,7 @@
 			"steps": [
 				{
 					"details": "Taiming",
-					"done": false
+					"done": true
 				},
 				{
 					"details": "Ai",
@@ -121,7 +121,7 @@
 		},
 		{
 			"uuid": "f846b7f6-b853-4304-b56c-54342e9ad606",
-			"title": "Art",
+			"title": "Room Art",
 			"description": "",
 			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
 			"steps": []

@@ -6,8 +6,6 @@ func _on_body_entered(body: Node2D) -> void:
 	
 	var item_interface:= body.get_node_or_null("Item") as Item
 	
-	if item_interface:
-		print("DSA ", item_interface.allow_pickup.call())
 	if item_interface && !item_interface.allow_pickup.call():
 		return
 	
