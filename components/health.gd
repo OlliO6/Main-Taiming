@@ -4,6 +4,7 @@ extends Node
 signal health_changed(health: int)
 signal damaged(health: int)
 signal healed(health: int)
+signal died
 
 @export var max_health: int = 10
 
@@ -11,6 +12,8 @@ var health: int:
 	set(v):
 		health = clampi(v, 0, max_health)
 		health_changed.emit(health)
+		if health == 0:
+			died.emit()
 
 func _ready() -> void:
 	full_live.call_deferred()

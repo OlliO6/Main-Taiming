@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cwffmeeyd6sgu"]
+[gd_scene load_steps=28 format=3 uid="uid://cwffmeeyd6sgu"]
 
 [ext_resource type="Shader" path="res://shader/sheet_outline.gdshader" id="1_bxdlx"]
 [ext_resource type="Script" path="res://monster/monster.gd" id="1_e686l"]
@@ -107,7 +107,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 1.1, 2.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(1, 1), Vector2(1.05, 0.95), Vector2(1, 1)]
+"values": [Vector2(1, 1), Vector2(1.07, 0.93), Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_4oew6"]
@@ -167,11 +167,51 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(0.8, 1.2), Vector2(1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_bpp4f"]
+resource_name = "knocked"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.2, 0.8)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b7nvd"]
 _data = {
 "RESET": SubResource("Animation_4lvg5"),
 "feeded": SubResource("Animation_uolog"),
 "idle": SubResource("Animation_kxoce"),
+"knocked": SubResource("Animation_bpp4f"),
 "run": SubResource("Animation_4oew6")
 }
 
@@ -181,29 +221,45 @@ animation = &"run"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nv6kw"]
 animation = &"feeded"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2sh73"]
+animation = &"knocked"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7yc8n"]
 animation = &"idle"
-
-[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_lxaf2"]
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_pdgt1"]
 filters = ["Sprite:rotation", "Sprite:scale", "Sprite:skew"]
 mix_mode = 1
 
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_cso2k"]
+xfade_time = 0.5
+input_0/name = "alive"
+input_0/auto_advance = false
+input_0/reset = true
+input_1/name = "knocked"
+input_1/auto_advance = false
+input_1/reset = true
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_lxaf2"]
+
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_k2he7"]
-graph_offset = Vector2(-262.208, -33.7456)
+graph_offset = Vector2(-339.977, -30.8447)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_7yc8n")
 nodes/Animation/position = Vector2(-160, 0)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_p6ptm")
 "nodes/Animation 2/position" = Vector2(-160, 140)
 "nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_nv6kw")
-"nodes/Animation 3/position" = Vector2(140, 200)
-nodes/Blend2/node = SubResource("AnimationNodeBlend2_lxaf2")
-nodes/Blend2/position = Vector2(0, 20)
-nodes/OneShot/node = SubResource("AnimationNodeOneShot_pdgt1")
-nodes/OneShot/position = Vector2(320, 100)
-nodes/output/position = Vector2(560, 140)
-node_connections = [&"Blend2", 0, &"Animation", &"Blend2", 1, &"Animation 2", &"OneShot", 0, &"Blend2", &"OneShot", 1, &"Animation 3", &"output", 0, &"OneShot"]
+"nodes/Animation 3/position" = Vector2(480, 220)
+"nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_2sh73")
+"nodes/Animation 4/position" = Vector2(100, 240)
+nodes/feed/node = SubResource("AnimationNodeOneShot_pdgt1")
+nodes/feed/position = Vector2(660, 120)
+nodes/knocked_switch/node = SubResource("AnimationNodeTransition_cso2k")
+nodes/knocked_switch/position = Vector2(260, 140)
+nodes/output/position = Vector2(860, 160)
+nodes/run_blend/node = SubResource("AnimationNodeBlend2_lxaf2")
+nodes/run_blend/position = Vector2(0, 20)
+node_connections = [&"feed", 0, &"knocked_switch", &"feed", 1, &"Animation 3", &"knocked_switch", 0, &"run_blend", &"knocked_switch", 1, &"Animation 4", &"output", 0, &"feed", &"run_blend", 0, &"Animation", &"run_blend", 1, &"Animation 2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wu04j"]
 size = Vector2(23, 18.5)
@@ -219,8 +275,10 @@ material = SubResource("ShaderMaterial_m1f0r")
 collision_layer = 16
 collision_mask = 17
 script = ExtResource("1_e686l")
-tame_outline_color = Color(0.760784, 0.827451, 0.407843, 1)
+tame_outline_color = Color(0.827451, 0.627451, 0.407843, 1)
 selected_outline_color = Color(0.811765, 0.541176, 0.796078, 1)
+in_team_outline_color = Color(0.541176, 0.690196, 0.376471, 1)
+knocked_outline_color = Color(0.705882, 0.321569, 0.321569, 1)
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("3_xunb3")
@@ -239,6 +297,9 @@ script = ExtResource("3_4420w")
 script = ExtResource("3_4420w")
 
 [node name="Preperation" type="Node" parent="StateMachine"]
+script = ExtResource("3_4420w")
+
+[node name="KnockedOut" type="Node" parent="StateMachine"]
 script = ExtResource("3_4420w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -263,10 +324,13 @@ libraries = {
 }
 tree_root = SubResource("AnimationNodeBlendTree_k2he7")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Blend2/blend_amount = 0.0
-parameters/OneShot/active = false
-parameters/OneShot/internal_active = false
-parameters/OneShot/request = 0
+parameters/feed/active = false
+parameters/feed/internal_active = false
+parameters/feed/request = 0
+parameters/knocked_switch/current_state = "alive"
+parameters/knocked_switch/transition_request = ""
+parameters/knocked_switch/current_index = 0
+parameters/run_blend/blend_amount = 0.0
 
 [node name="InteractArea" type="Area2D" parent="."]
 collision_layer = 0
@@ -297,6 +361,7 @@ text = "5/10"
 label_settings = SubResource("LabelSettings_ec72f")
 horizontal_alignment = 1
 
+[connection signal="died" from="Health" to="." method="_on_knockout"]
 [connection signal="health_changed" from="Health" to="." method="_on_health_changed"]
 [connection signal="deselected" from="Interactable" to="." method="_on_deselected"]
 [connection signal="interacted" from="Interactable" to="." method="_on_interacted"]
@@ -304,5 +369,7 @@ horizontal_alignment = 1
 [connection signal="state_switched" from="StateMachine" to="." method="_on_state_switched"]
 [connection signal="state_entered" from="StateMachine/TamingPhase1" to="." method="_on_taming_phase_1_state_entered"]
 [connection signal="state_entered" from="StateMachine/TamingPhase2" to="." method="_on_taming_phase_2_state_entered"]
+[connection signal="state_exited" from="StateMachine/TamingPhase2" to="." method="_on_taming_phase_2_state_exited"]
 [connection signal="state_entered" from="StateMachine/Preperation" to="." method="_on_preperation_state_entered"]
+[connection signal="state_exited" from="StateMachine/KnockedOut" to="." method="_on_knocked_out_state_exited"]
 [connection signal="body_entered" from="InteractArea" to="." method="_on_interact_area_body_entered"]

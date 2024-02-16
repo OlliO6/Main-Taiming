@@ -6,6 +6,8 @@ extends CharacterBody2D
 @export var tame_outline_color: Color
 @export_group("")
 @export var selected_outline_color: Color
+@export var in_team_outline_color: Color
+@export var knocked_outline_color: Color
 
 @onready var interact_label: Label = $InteractLabel
 @onready var animation_tree: AnimationTree = $AnimationTree
@@ -14,6 +16,7 @@ extends CharacterBody2D
 @onready var taming_phase_1_state: State = $StateMachine/TamingPhase1
 @onready var taming_phase_2_state: State = $StateMachine/TamingPhase2
 @onready var preperation_state: State = $StateMachine/Preperation
+@onready var knocked_out_state: State = $StateMachine/KnockedOut
 @onready var sprite: Sprite2D = $Sprite
 @onready var health_interface: Health = $Health
 @onready var health_label: Label = $HealthLabel
@@ -26,15 +29,16 @@ func _ready() -> void:
 	_set_outline_color(Color(0, 0, 0, 0), true)
 	interact_label.hide()
 	health_label.hide()
+	
 	interactable_interface.allow_interaction = func() -> bool:
-		return state_machine.state == taming_phase_2_state || state_machine.state == preperation_state 
+		return state_machine.state == taming_phase_2_state || state_machine.state == preperation_state
 
 func is_in_team() -> bool:
 	return self in Globals.team
 
 func feed(vegetable: Vegetable) -> void:
 	
-	animation_tree.set("parameters/OneShot/request", 1)
+	animation_tree.set("parameters/feed/request", 1)
 	
 	if state_machine.state == taming_phase_1_state:
 		vegetables_feeded += vegetable.vegetables_count
@@ -57,6 +61,8 @@ func is_feedable() -> bool:
 			return true
 		taming_phase_2_state:
 			return false
+		knocked_out_state:
+			return Globals.game_state == Globals.GameState.PREPERATION
 	
 	return !health_interface.is_full_health()
 
@@ -71,8 +77,10 @@ func _on_interacted() -> void:
 	elif state_machine.state == preperation_state:
 		if is_in_team():
 			Globals.remove_from_team(self)
+			_set_outline_color(Color(0, 0, 0, 0), true)
 		else:
 			Globals.add_to_team(self)
+			_set_outline_color(in_team_outline_color, true)
 		interact_label.text = _get_interact_label_text()
 
 func _on_interact_area_body_entered(body: Node2D) -> void:
@@ -103,6 +111,9 @@ func _on_taming_phase_2_state_entered() -> void:
 	_set_outline_color(tame_outline_color, true)
 	health_label.hide()
 
+func _on_taming_phase_2_state_exited() -> void:
+	_set_outline_color(Color(0, 0, 0, 0), true)
+
 func _on_preperation_state_entered() -> void:
 	health_label.show()
 	health_interface.full_live()
@@ -113,7 +124,9 @@ func _update_health_label(max: int, current: int) -> void:
 
 func _on_health_changed(health: int) -> void:
 	_update_health_label(health_interface.max_health, health)
-
+	
+	if state_machine.state == knocked_out_state && health_interface.is_full_health():
+		state_machine.switch_state(preperation_state)
 
 func _on_selected() -> void:
 	interact_label.show()
@@ -122,3 +135,24 @@ func _on_selected() -> void:
 func _on_deselected() -> void:
 	interact_label.hide()
 	_set_outline_color(_outline_color, false)
+
+func _on_knockout() -> void:
+	health_label.visible = Globals.game_state == Globals.GameState.PREPERATION
+	_set_outline_color(knocked_outline_color, true)
+	animation_tree.set("parameters/knocked_switch/transition_request", 1)
+
+func _on_knocked_out_state_exited() -> void:
+	health_label.hide()
+	_set_outline_color(Color(0, 0, 0, 0), true)
+	animation_tree.set("parameters/knocked_switch/transition_request", 0)
+
+#TODO: call
+func _on_fight_started() -> void:
+	pass
+
+#TODO: call
+func _on_fight_ended() -> void:
+	if state_machine.state == knocked_out_state:
+		health_label.show()
+		Globals.remove_from_team(self)
+
