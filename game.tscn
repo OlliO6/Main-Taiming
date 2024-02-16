@@ -69,10 +69,10 @@ tween_parameters = SubResource("Resource_c5435")
 tween_on_load = false
 inactive_update_mode = 0
 
+[node name="Door2" parent="Room" instance=ExtResource("9_rjsbv")]
+position = Vector2(0, -91)
+
 [node name="Player" parent="." instance=ExtResource("2_5idx6")]
 
 [node name="TestMonster" parent="." instance=ExtResource("5_vnat6")]
 position = Vector2(0, -40)
-
-[node name="Door2" parent="." instance=ExtResource("9_rjsbv")]
-position = Vector2(0, -91)

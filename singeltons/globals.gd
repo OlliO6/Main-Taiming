@@ -9,7 +9,7 @@ const BASIC_VEGETABLE_SCENE: PackedScene = preload("res://items/vegetables/basic
 
 var player: Player
 
-var vegetable_count: int = 10:
+var vegetable_count: int = 5:
 	set(v):
 		vegetable_count_changed.emit()
 		vegetable_count = v

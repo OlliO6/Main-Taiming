@@ -232,44 +232,49 @@ animation = &"idle"
 filters = ["Sprite:rotation", "Sprite:scale", "Sprite:skew"]
 mix_mode = 1
 
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_fyd0t"]
+
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_cso2k"]
 xfade_time = 0.5
-input_0/name = "alive"
+input_0/name = "idle"
 input_0/auto_advance = false
 input_0/reset = true
-input_1/name = "knocked"
+input_1/name = "run"
 input_1/auto_advance = false
 input_1/reset = true
-
-[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_lxaf2"]
+input_2/name = "knocked"
+input_2/auto_advance = false
+input_2/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_k2he7"]
-graph_offset = Vector2(-339.977, -30.8447)
+graph_offset = Vector2(-262.227, -17.7117)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_7yc8n")
-nodes/Animation/position = Vector2(-160, 0)
+nodes/Animation/position = Vector2(40, -40)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_p6ptm")
-"nodes/Animation 2/position" = Vector2(-160, 140)
+"nodes/Animation 2/position" = Vector2(-100, 100)
 "nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_nv6kw")
 "nodes/Animation 3/position" = Vector2(480, 220)
 "nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_2sh73")
-"nodes/Animation 4/position" = Vector2(100, 240)
+"nodes/Animation 4/position" = Vector2(40, 240)
 nodes/feed/node = SubResource("AnimationNodeOneShot_pdgt1")
 nodes/feed/position = Vector2(660, 120)
-nodes/knocked_switch/node = SubResource("AnimationNodeTransition_cso2k")
-nodes/knocked_switch/position = Vector2(260, 140)
 nodes/output/position = Vector2(860, 160)
-nodes/run_blend/node = SubResource("AnimationNodeBlend2_lxaf2")
-nodes/run_blend/position = Vector2(0, 20)
-node_connections = [&"feed", 0, &"knocked_switch", &"feed", 1, &"Animation 3", &"knocked_switch", 0, &"run_blend", &"knocked_switch", 1, &"Animation 4", &"output", 0, &"feed", &"run_blend", 0, &"Animation", &"run_blend", 1, &"Animation 2"]
+nodes/run_speed/node = SubResource("AnimationNodeTimeScale_fyd0t")
+nodes/run_speed/position = Vector2(40, 100)
+nodes/state/node = SubResource("AnimationNodeTransition_cso2k")
+nodes/state/position = Vector2(240, 60)
+node_connections = [&"feed", 0, &"state", &"feed", 1, &"Animation 3", &"output", 0, &"feed", &"run_speed", 0, &"Animation 2", &"state", 0, &"Animation", &"state", 1, &"run_speed", &"state", 2, &"Animation 4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wu04j"]
 size = Vector2(23, 18.5)
 
 [sub_resource type="LabelSettings" id="LabelSettings_4hu0g"]
 font_size = 8
+font_color = Color(0.94902, 0.941176, 0.898039, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ec72f"]
-font_size = 8
+font_size = 6
+font_color = Color(0.94902, 0.941176, 0.898039, 1)
 
 [sub_resource type="Curve" id="Curve_w2uaq"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.326733, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -296,8 +301,11 @@ collision_layer = 16
 collision_mask = 17
 script = ExtResource("1_e686l")
 tame_outline_color = Color(0.827451, 0.627451, 0.407843, 1)
+follow_max_player_dist = 30.0
+follow_speed = 15.0
+follow_damping = 0.15
 selected_outline_color = Color(0.811765, 0.541176, 0.796078, 1)
-in_team_outline_color = Color(0.541176, 0.690196, 0.376471, 1)
+in_team_outline_color = Color(0.545098, 0.690196, 0.380392, 0)
 knocked_outline_color = Color(0.705882, 0.321569, 0.321569, 1)
 
 [node name="Health" type="Node" parent="."]
@@ -347,10 +355,10 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/feed/active = false
 parameters/feed/internal_active = false
 parameters/feed/request = 0
-parameters/knocked_switch/current_state = "alive"
-parameters/knocked_switch/transition_request = ""
-parameters/knocked_switch/current_index = 0
-parameters/run_blend/blend_amount = 0.0
+parameters/run_speed/scale = 1.0
+parameters/state/current_state = "idle"
+parameters/state/transition_request = ""
+parameters/state/current_index = 0
 
 [node name="InteractArea" type="Area2D" parent="."]
 collision_layer = 0

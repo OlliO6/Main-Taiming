@@ -6,6 +6,10 @@ signal tamed
 @export_group("taming")
 @export var vegetables_needed: int = 3
 @export var tame_outline_color: Color
+@export_group("following")
+@export var follow_max_player_dist: float
+@export var follow_speed: float
+@export_range(0, 1) var follow_damping: float
 @export_group("")
 @export var selected_outline_color: Color
 @export var in_team_outline_color: Color
@@ -36,6 +40,30 @@ func _ready() -> void:
 		return state_machine.state == taming_phase_2_state || state_machine.state == preperation_state
 	
 	Globals.team_changed.connect(_on_team_changed)
+
+func _physics_process(delta: float) -> void:
+	
+	match state_machine.state:
+		preperation_state:
+			if is_in_team():
+				follow_player(delta)
+			else:
+				_set_anim_state("idle")
+
+func follow_player(delta: float):
+	var player_pos:= Globals.player.position
+	var target_velocity: Vector2
+	
+	if player_pos.distance_to(position) < follow_max_player_dist:
+		_set_anim_state("idle")
+		target_velocity = Vector2.ZERO
+	else:
+		_set_anim_state("run")
+		var dir:= (player_pos - position).normalized()
+		target_velocity = dir * follow_speed
+	
+	velocity = velocity.lerp(target_velocity, (1 - follow_damping) * delta)
+	move_and_slide()
 
 func is_in_team() -> bool:
 	return self in Globals.team
@@ -71,6 +99,9 @@ func is_feedable() -> bool:
 	
 	return !health_interface.is_full_health()
 
+func _set_anim_state(state: String):
+	animation_tree.set("parameters/state/transition_request", state)
+
 func _set_outline_color(color: Color, save: bool) -> void:
 	if save:
 		_outline_color = color
@@ -97,6 +128,9 @@ func _on_interact_area_body_entered(body: Node2D) -> void:
 	if body is Vegetable:
 		if is_feedable():
 			feed(body)
+		elif health_interface.is_full_health():
+			create_tween().tween_property(health_label, "modulate:a", 0.0, 1).from(1.0)\
+				.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 		return
 
 func _get_interact_label_text() -> String:
@@ -130,6 +164,7 @@ func _on_preperation_state_entered() -> void:
 
 func _update_health_label(max: int, current: int) -> void:
 	health_label.text = str(current) + "/" + str(max)
+	health_label.modulate.a = 0 if max == current else 1
 
 func _on_health_changed(health: int) -> void:
 	_update_health_label(health_interface.max_health, health)
@@ -148,7 +183,7 @@ func _on_deselected() -> void:
 func _on_knockout() -> void:
 	health_label.visible = Globals.game_state == Globals.GameState.PREPERATION
 	_set_outline_color(knocked_outline_color, true)
-	animation_tree.set("parameters/knocked_switch/transition_request", 1)
+	animation_tree.set("parameters/state/transition_request", 2)
 
 func _on_knocked_out_state_exited() -> void:
 	health_label.hide()
