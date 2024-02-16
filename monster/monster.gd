@@ -1,6 +1,8 @@
 class_name Monster
 extends CharacterBody2D
 
+signal tamed
+
 @export_group("taming")
 @export var vegetables_needed: int = 3
 @export var tame_outline_color: Color
@@ -54,6 +56,7 @@ func feed(vegetable: Vegetable) -> void:
 func finish_tame() -> void:
 	state_machine.switch_state(preperation_state)
 	health_interface.full_live()
+	tamed.emit()
 
 func is_feedable() -> bool:
 	match state_machine.state:

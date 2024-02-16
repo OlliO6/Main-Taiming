@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cwffmeeyd6sgu"]
+[gd_scene load_steps=32 format=3 uid="uid://cwffmeeyd6sgu"]
 
 [ext_resource type="Shader" path="res://shader/sheet_outline.gdshader" id="1_bxdlx"]
 [ext_resource type="Script" path="res://monster/monster.gd" id="1_e686l"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://components/health.gd" id="3_xunb3"]
 [ext_resource type="Script" path="res://components/interactable.gd" id="4_jcere"]
 [ext_resource type="Texture2D" uid="uid://bh201qypfnlf7" path="res://monster/monster.png" id="4_wbmr4"]
+[ext_resource type="Texture2D" uid="uid://b72i575srys6a" path="res://monster/tame_particle.png" id="8_sljtx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1f0r"]
 shader = ExtResource("1_bxdlx")
@@ -270,6 +271,25 @@ font_size = 8
 [sub_resource type="LabelSettings" id="LabelSettings_ec72f"]
 font_size = 8
 
+[sub_resource type="Curve" id="Curve_w2uaq"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.326733, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_a4sfw"]
+curve = SubResource("Curve_w2uaq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0burh"]
+lifetime_randomness = 0.39
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 10.23
+direction = Vector3(0, -1, 0)
+spread = 50.087
+initial_velocity_min = 0.15
+initial_velocity_max = 2.75
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_a4sfw")
+
 [node name="TestMonster" type="CharacterBody2D"]
 material = SubResource("ShaderMaterial_m1f0r")
 collision_layer = 16
@@ -361,6 +381,18 @@ text = "5/10"
 label_settings = SubResource("LabelSettings_ec72f")
 horizontal_alignment = 1
 
+[node name="TameParticles" type="GPUParticles2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -5)
+emitting = false
+amount = 3
+process_material = SubResource("ParticleProcessMaterial_0burh")
+texture = ExtResource("8_sljtx")
+lifetime = 3.8
+one_shot = true
+explosiveness = 1.0
+
+[connection signal="tamed" from="." to="TameParticles" method="restart"]
 [connection signal="died" from="Health" to="." method="_on_knockout"]
 [connection signal="health_changed" from="Health" to="." method="_on_health_changed"]
 [connection signal="deselected" from="Interactable" to="." method="_on_deselected"]
