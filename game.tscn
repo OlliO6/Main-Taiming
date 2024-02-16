@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgrh1rjccylef"]
+[gd_scene load_steps=7 format=3 uid="uid://cgrh1rjccylef"]
 
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_r4gmu"]
 [ext_resource type="PackedScene" uid="uid://c076y8slf1upt" path="res://player/player.tscn" id="2_5idx6"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="3_vcs8i"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_7denj"]
+[ext_resource type="PackedScene" uid="uid://cwffmeeyd6sgu" path="res://monster/test/test_monster.tscn" id="5_vnat6"]
 
 [sub_resource type="Resource" id="Resource_pfwig"]
 script = ExtResource("4_7denj")
@@ -42,3 +43,7 @@ tween_on_load = false
 inactive_update_mode = 0
 
 [node name="Player" parent="." instance=ExtResource("2_5idx6")]
+
+[node name="TestMonster" parent="." instance=ExtResource("5_vnat6")]
+position = Vector2(45, -17)
+vegetables_needed = null

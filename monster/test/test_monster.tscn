@@ -1,0 +1,162 @@
+[gd_scene load_steps=11 format=3 uid="uid://cwffmeeyd6sgu"]
+
+[ext_resource type="Script" path="res://monster/monster.gd" id="1_e686l"]
+[ext_resource type="Texture2D" uid="uid://bvysaumy30pub" path="res://icon.svg" id="2_ioluv"]
+[ext_resource type="Script" path="res://components/state_machine.gd" id="2_wxuav"]
+[ext_resource type="Script" path="res://components/state.gd" id="3_4420w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_db0ey"]
+size = Vector2(32.4324, 26.2162)
+
+[sub_resource type="Animation" id="Animation_kxoce"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_4oew6"]
+resource_name = "run"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.174533, 0.0, -0.174533, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.174533, 0.0, 0.174533, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_4lvg5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b7nvd"]
+_data = {
+"RESET": SubResource("Animation_4lvg5"),
+"idle": SubResource("Animation_kxoce"),
+"run": SubResource("Animation_4oew6")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wu04j"]
+size = Vector2(38, 32)
+
+[node name="TestMonster" type="CharacterBody2D"]
+collision_layer = 16
+script = ExtResource("1_e686l")
+vegetables_needed = null
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("2_wxuav")
+start_state = NodePath("TamingPhase1")
+
+[node name="TamingPhase1" type="Node" parent="StateMachine"]
+script = ExtResource("3_4420w")
+
+[node name="TamingPhase2" type="Node" parent="StateMachine"]
+script = ExtResource("3_4420w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3.10811)
+shape = SubResource("RectangleShape2D_db0ey")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+scale = Vector2(0.275, 0.275)
+texture = ExtResource("2_ioluv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_b7nvd")
+}
+
+[node name="FeedingArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 14
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FeedingArea"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_wu04j")
+
+[node name="TameLabel" type="Label" parent="."]
+visible = false
+offset_left = -41.0
+offset_top = 16.0
+offset_right = 41.0
+offset_bottom = 39.0
+text = "'e' to tame"
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -26.0
+offset_top = 16.0
+offset_right = 26.0
+offset_bottom = 23.0
+min_value = 0.06
+max_value = 1.0
+value = 0.06
+show_percentage = false
+
+[connection signal="state_entered" from="StateMachine/TamingPhase2" to="." method="_on_taming_phase_2_state_entered"]
+[connection signal="body_entered" from="FeedingArea" to="." method="_on_feeding_area_body_entered"]

@@ -5,6 +5,9 @@ extends CharacterBody2D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+func _ready() -> void:
+	Globals.player = self
+
 func _physics_process(delta: float) -> void:
 	
 	var input_vector: Vector2
