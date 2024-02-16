@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://c076y8slf1upt"]
+[gd_scene load_steps=13 format=3 uid="uid://c076y8slf1upt"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_y2mtw"]
+[ext_resource type="Material" uid="uid://cw3n3jipn63eo" path="res://shader/standart_mat.tres" id="2_dtl4a"]
 [ext_resource type="Texture2D" uid="uid://clu0ve7b55kob" path="res://player/player.png" id="2_wip1v"]
 [ext_resource type="Script" path="res://player/item_holder.gd" id="3_tmjgv"]
 [ext_resource type="Script" path="res://player/interact_area.gd" id="5_a06vr"]
@@ -150,6 +151,7 @@ movement_speed = 30.0
 shape = SubResource("CircleShape2D_e81ku")
 
 [node name="Sprite" type="Sprite2D" parent="."]
+material = ExtResource("2_dtl4a")
 position = Vector2(0, -5)
 texture = ExtResource("2_wip1v")
 hframes = 2
