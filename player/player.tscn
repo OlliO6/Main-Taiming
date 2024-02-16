@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://player/player.gd" id="1_y2mtw"]
 [ext_resource type="Texture2D" uid="uid://clu0ve7b55kob" path="res://player/player.png" id="2_wip1v"]
 [ext_resource type="Script" path="res://player/item_holder.gd" id="3_tmjgv"]
-[ext_resource type="Script" path="res://player/pickup_area.gd" id="5_7nigq"]
+[ext_resource type="Script" path="res://player/interact_area.gd" id="5_a06vr"]
 [ext_resource type="Script" path="res://player/item_throwing.gd" id="5_ps5f2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e81ku"]
@@ -181,15 +181,15 @@ autoplay = "idle"
 playback_default_blend_time = 0.2
 blend_times = [&"idle", &"idle", 0.2, &"idle", &"run", 0.2]
 
-[node name="PickupArea2D" type="Area2D" parent="."]
+[node name="InteractArea2D" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 21
 monitorable = false
-script = ExtResource("5_7nigq")
+script = ExtResource("5_a06vr")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea2D"]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_s30ou")
 
-[connection signal="body_entered" from="PickupArea2D" to="PickupArea2D" method="_on_body_entered"]
-[connection signal="body_exited" from="PickupArea2D" to="PickupArea2D" method="_on_body_exited"]
+[connection signal="body_entered" from="InteractArea2D" to="InteractArea2D" method="_on_body_entered"]
+[connection signal="body_exited" from="InteractArea2D" to="InteractArea2D" method="_on_body_exited"]

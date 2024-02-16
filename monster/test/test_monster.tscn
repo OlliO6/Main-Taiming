@@ -1,10 +1,11 @@
-[gd_scene load_steps=25 format=3 uid="uid://cwffmeeyd6sgu"]
+[gd_scene load_steps=26 format=3 uid="uid://cwffmeeyd6sgu"]
 
 [ext_resource type="Shader" path="res://shader/sheet_outline.gdshader" id="1_bxdlx"]
 [ext_resource type="Script" path="res://monster/monster.gd" id="1_e686l"]
 [ext_resource type="Script" path="res://components/state_machine.gd" id="2_wxuav"]
 [ext_resource type="Script" path="res://components/state.gd" id="3_4420w"]
 [ext_resource type="Script" path="res://components/health.gd" id="3_xunb3"]
+[ext_resource type="Script" path="res://components/interactable.gd" id="4_jcere"]
 [ext_resource type="Texture2D" uid="uid://bh201qypfnlf7" path="res://monster/monster.png" id="4_wbmr4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1f0r"]
@@ -91,6 +92,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nut2t"]
+resource_local_to_scene = true
 shader = SubResource("Shader_ojmv1")
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
@@ -288,9 +290,13 @@ material = SubResource("ShaderMaterial_m1f0r")
 collision_layer = 16
 script = ExtResource("1_e686l")
 tame_outline_color = Color(0.760784, 0.827451, 0.407843, 1)
+selected_outline_color = Color(0.811765, 0.541176, 0.796078, 1)
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("3_xunb3")
+
+[node name="Interactable" type="Node" parent="."]
+script = ExtResource("4_jcere")
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("2_wxuav")
@@ -362,9 +368,11 @@ label_settings = SubResource("LabelSettings_ec72f")
 horizontal_alignment = 1
 
 [connection signal="health_changed" from="Health" to="." method="_on_health_changed"]
+[connection signal="deselected" from="Interactable" to="." method="_on_deselected"]
+[connection signal="interacted" from="Interactable" to="." method="_on_interacted"]
+[connection signal="selected" from="Interactable" to="." method="_on_selected"]
 [connection signal="state_switched" from="StateMachine" to="." method="_on_state_switched"]
 [connection signal="state_entered" from="StateMachine/TamingPhase1" to="." method="_on_taming_phase_1_state_entered"]
 [connection signal="state_entered" from="StateMachine/TamingPhase2" to="." method="_on_taming_phase_2_state_entered"]
 [connection signal="state_entered" from="StateMachine/Preperation" to="." method="_on_preperation_state_entered"]
 [connection signal="body_entered" from="InteractArea" to="." method="_on_interact_area_body_entered"]
-[connection signal="body_exited" from="InteractArea" to="." method="_on_interact_area_body_exited"]

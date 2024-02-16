@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgrh1rjccylef"]
+[gd_scene load_steps=8 format=3 uid="uid://cgrh1rjccylef"]
 
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_r4gmu"]
 [ext_resource type="PackedScene" uid="uid://c076y8slf1upt" path="res://player/player.tscn" id="2_5idx6"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="3_vcs8i"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_7denj"]
 [ext_resource type="PackedScene" uid="uid://cwffmeeyd6sgu" path="res://monster/test/test_monster.tscn" id="5_vnat6"]
+[ext_resource type="PackedScene" uid="uid://5bntft4da0sv" path="res://items/vegetables/basic_vegetable/basic_vegetable.tscn" id="6_jbbmu"]
 
 [sub_resource type="Resource" id="Resource_pfwig"]
 script = ExtResource("4_7denj")
@@ -47,3 +48,33 @@ inactive_update_mode = 0
 
 [node name="TestMonster" parent="." instance=ExtResource("5_vnat6")]
 position = Vector2(45, -17)
+
+[node name="TestMonster2" parent="." instance=ExtResource("5_vnat6")]
+position = Vector2(8, -15)
+
+[node name="TestMonster5" parent="." instance=ExtResource("5_vnat6")]
+position = Vector2(19, -14)
+
+[node name="TestMonster3" parent="." instance=ExtResource("5_vnat6")]
+position = Vector2(-35, -21)
+
+[node name="TestMonster4" parent="." instance=ExtResource("5_vnat6")]
+position = Vector2(-76, -17)
+
+[node name="Vegetable" parent="." instance=ExtResource("6_jbbmu")]
+position = Vector2(-88, 42)
+
+[node name="Vegetable2" parent="." instance=ExtResource("6_jbbmu")]
+position = Vector2(-71, 43)
+
+[node name="Vegetable3" parent="." instance=ExtResource("6_jbbmu")]
+position = Vector2(-37, 40)
+
+[node name="Vegetable4" parent="." instance=ExtResource("6_jbbmu")]
+position = Vector2(-19, 47)
+
+[node name="Vegetable5" parent="." instance=ExtResource("6_jbbmu")]
+position = Vector2(5, 39)
+
+[node name="Vegetable6" parent="." instance=ExtResource("6_jbbmu")]
+position = Vector2(29, 39)
