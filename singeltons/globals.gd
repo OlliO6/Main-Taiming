@@ -21,9 +21,6 @@ var team:= [] as Array[Monster]
 
 var game_state: GameState = GameState.PREPERATION
 
-func _process(delta: float) -> void:
-	print(vegetable_count)
-
 func is_team_full() -> bool:
 	return team.size() >= max_team
 

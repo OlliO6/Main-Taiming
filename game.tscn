@@ -1,17 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://cgrh1rjccylef"]
+[gd_scene load_steps=11 format=3 uid="uid://cgrh1rjccylef"]
 
 [ext_resource type="PackedScene" uid="uid://cwlnn5fwd7frh" path="res://ui/ingame/ingame_overlay.tscn" id="1_lnhvx"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_r4gmu"]
 [ext_resource type="PackedScene" uid="uid://c076y8slf1upt" path="res://player/player.tscn" id="2_5idx6"]
+[ext_resource type="Material" uid="uid://cw3n3jipn63eo" path="res://shader/standart_mat.tres" id="3_eff32"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="3_vcs8i"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_7denj"]
+[ext_resource type="TileSet" uid="uid://cwax0tpinmo87" path="res://tileset/tile_set.tres" id="4_v8x2w"]
 [ext_resource type="PackedScene" uid="uid://cwffmeeyd6sgu" path="res://monster/test/test_monster.tscn" id="5_vnat6"]
-[ext_resource type="PackedScene" uid="uid://5bntft4da0sv" path="res://items/vegetables/basic_vegetable/basic_vegetable.tscn" id="6_jbbmu"]
+[ext_resource type="PackedScene" uid="uid://cukfprpt0817d" path="res://door/door.tscn" id="9_rjsbv"]
 
-[sub_resource type="Resource" id="Resource_pfwig"]
+[sub_resource type="Resource" id="Resource_c5435"]
 script = ExtResource("4_7denj")
 duration = 1.0
-transition = 1
+transition = 0
 ease = 2
 
 [node name="Game" type="Node2D"]
@@ -22,64 +24,55 @@ y_sort_enabled = true
 [node name="IngameOverlay" parent="CanvasLayer" instance=ExtResource("1_lnhvx")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.5, 1.5)
+visible = false
+position = Vector2(15, -23)
+zoom = Vector2(1.88, 1.88)
+limit_left = -112
+limit_top = -112
+limit_right = 112
+limit_bottom = 48
+editor_draw_screen = false
+editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
 script = ExtResource("1_r4gmu")
 
-[node name="PlayerCam" type="Node2D" parent="."]
+[node name="Room" type="TileMap" parent="."]
+z_index = -1
+material = ExtResource("3_eff32")
+tile_set = ExtResource("4_v8x2w")
+format = 2
+layer_0/tile_data = PackedInt32Array(65541, 131072, 2, 5, 196608, 0, -196603, 196608, 1, -262139, 131072, 1, -327675, 131072, 0, 131076, 131072, 2, 65540, 196608, 0, 4, 65536, 1, -65532, 65536, 1, -131068, 65536, 1, -196604, 65536, 1, -262140, 65536, 1, -327676, 65536, 0, 131075, 65536, 2, 65539, 65536, 1, 3, 65536, 1, -65533, 65536, 1, -131069, 65536, 1, -196605, 65536, 1, -262141, 65536, 1, 131074, 65536, 2, 65538, 65536, 1, 2, 65536, 1, -65534, 65536, 1, -131070, 65536, 1, -196606, 65536, 1, -262142, 65536, 1, 131073, 65536, 2, 65537, 65536, 1, 1, 65536, 1, -65535, 65536, 1, -131071, 65536, 1, -196607, 65536, 1, -262143, 65536, 1, -327679, 65536, 1, 131072, 0, 2, 65536, 262144, 0, 0, 65536, 1, -65536, 65536, 1, -131072, 65536, 1, -196608, 65536, 1, -262144, 65536, 1, -327680, 65536, 1, 131071, 65536, 2, 65535, 65536, 1, -1, 65536, 1, -65537, 65536, 1, -131073, 65536, 1, -196609, 65536, 1, -262145, 65536, 1, 196606, 131072, 2, 131070, 196608, 0, 65534, 65536, 1, -2, 65536, 1, -65538, 65536, 1, -131074, 65536, 1, -196610, 65536, 1, -262146, 65536, 1, 196605, 65536, 2, 131069, 65536, 1, 65533, 65536, 1, -3, 65536, 1, -65539, 65536, 1, -131075, 65536, 1, -196611, 65536, 1, -262147, 262144, 1, -327683, 0, 0, 196604, 0, 2, 131068, 262144, 0, 65532, 65536, 1, -4, 65536, 1, -65540, 65536, 1, -131076, 65536, 1, -196612, 65536, 1, -262148, 65536, 0, 131067, 65536, 2, 65531, 65536, 1, -5, 65536, 1, -65541, 65536, 1, -131077, 65536, 1, -196613, 65536, 1, -262149, 65536, 0, -6, 262144, 0, -65531, 65536, 1, -131067, 65536, 1, -131078, 65536, 1, -131066, 131072, 1, -65530, 131072, 1, -196602, 131072, 0, 65530, 0, 1, -196614, 262144, 1, -262150, 0, 0, 6, 131072, 2, -65542, 65536, 1, -65543, 0, 1, -7, 0, 2, -131079, 0, 1, 131066, 0, 2, -196615, 0, 0, -393214, 131072, 0, -327678, 196608, 1, -327677, 65536, 0, -393215, 65536, 0, -393216, 65536, 1, -327681, 65536, 1, -327682, 65536, 0, -458752, 65536, 0, -393217, 65536, 0)
+
+[node name="PhantomCamera2D" type="Node2D" parent="Room"]
+visible = false
+position = Vector2(15, -23)
 script = ExtResource("3_vcs8i")
 priority_override = false
-priority = 5
-zoom = Vector2(1.5, 1.5)
-follow_mode = 1
-follow_target = NodePath("../Player")
+priority = 0
+zoom = Vector2(1.88, 1.88)
+follow_mode = 5
+follow_target = NodePath("../../Player")
+follow_parameters/target_offset = Vector2(0, 0)
 follow_parameters/damping = true
-follow_parameters/damping_value = 1.59
+follow_parameters/damping_value = 2.801
+follow_parameters/dead_zone_horizontal = 0.25
+follow_parameters/dead_zone_vertical = 0.25
+follow_parameters/viewfinder_in_play = false
 frame_preview = true
 pixel_perfect = false
 limit/draw_limits = true
-limit/left = -10000000
-limit/top = -10000000
-limit/right = 10000000
-limit/bottom = 10000000
-limit/limit_node_target = NodePath("")
-limit/smoothed = false
-tween_parameters = SubResource("Resource_pfwig")
+limit/limit_node_target = NodePath("..")
+limit/margin = Vector4i(0, 0, 0, 0)
+limit/smoothed = true
+tween_parameters = SubResource("Resource_c5435")
 tween_on_load = false
 inactive_update_mode = 0
 
 [node name="Player" parent="." instance=ExtResource("2_5idx6")]
 
 [node name="TestMonster" parent="." instance=ExtResource("5_vnat6")]
-position = Vector2(45, -17)
+position = Vector2(0, -40)
 
-[node name="TestMonster2" parent="." instance=ExtResource("5_vnat6")]
-position = Vector2(8, -15)
-
-[node name="TestMonster5" parent="." instance=ExtResource("5_vnat6")]
-position = Vector2(19, -14)
-
-[node name="TestMonster3" parent="." instance=ExtResource("5_vnat6")]
-position = Vector2(-35, -21)
-
-[node name="TestMonster4" parent="." instance=ExtResource("5_vnat6")]
-position = Vector2(-76, -17)
-
-[node name="Vegetable" parent="." instance=ExtResource("6_jbbmu")]
-position = Vector2(-88, 42)
-
-[node name="Vegetable2" parent="." instance=ExtResource("6_jbbmu")]
-position = Vector2(-71, 43)
-
-[node name="Vegetable3" parent="." instance=ExtResource("6_jbbmu")]
-position = Vector2(-37, 40)
-
-[node name="Vegetable4" parent="." instance=ExtResource("6_jbbmu")]
-position = Vector2(-19, 47)
-
-[node name="Vegetable5" parent="." instance=ExtResource("6_jbbmu")]
-position = Vector2(5, 39)
-
-[node name="Vegetable6" parent="." instance=ExtResource("6_jbbmu")]
-position = Vector2(29, 39)
+[node name="Door2" parent="." instance=ExtResource("9_rjsbv")]
+position = Vector2(0, -91)

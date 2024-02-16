@@ -1,0 +1,76 @@
+[gd_scene load_steps=10 format=3 uid="uid://cukfprpt0817d"]
+
+[ext_resource type="Script" path="res://door/door.gd" id="1_mciy2"]
+[ext_resource type="Script" path="res://components/interactable.gd" id="2_wdt5m"]
+[ext_resource type="Material" uid="uid://cw3n3jipn63eo" path="res://shader/standart_mat.tres" id="3_r378k"]
+[ext_resource type="Texture2D" uid="uid://fe0ign7rmqo1" path="res://door/door.png" id="4_nq4w6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6xxpl"]
+size = Vector2(22, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m5wqx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jehai"]
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_r3n27"]
+font_size = 6
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xkiri"]
+size = Vector2(22, 10)
+
+[node name="Door" type="CharacterBody2D"]
+script = ExtResource("1_mciy2")
+
+[node name="Interactable" type="Node" parent="."]
+script = ExtResource("2_wdt5m")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("3_r378k")
+texture = ExtResource("4_nq4w6")
+hframes = 2
+
+[node name="DoorCollider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6xxpl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(21, 0)
+shape = SubResource("RectangleShape2D_m5wqx")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-21, 0)
+shape = SubResource("RectangleShape2D_m5wqx")
+
+[node name="InteractLabel" type="Label" parent="."]
+visible = false
+offset_left = -20.0
+offset_top = 7.0
+offset_right = 21.0
+offset_bottom = 30.0
+text = "'e' to open"
+label_settings = SubResource("LabelSettings_jehai")
+horizontal_alignment = 1
+
+[node name="TeamExplanation" type="Label" parent="."]
+visible = false
+offset_left = -79.0
+offset_top = -16.0
+offset_right = 79.0
+offset_bottom = 7.0
+text = "You need at least 1 monster on your side"
+label_settings = SubResource("LabelSettings_r3n27")
+horizontal_alignment = 1
+
+[node name="EnterArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnterArea"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_xkiri")
+
+[connection signal="deselected" from="Interactable" to="InteractLabel" method="hide"]
+[connection signal="interacted" from="Interactable" to="." method="_on_interacted"]
+[connection signal="selected" from="Interactable" to="InteractLabel" method="show"]
+[connection signal="body_entered" from="EnterArea" to="." method="_on_enter_area_body_entered"]
