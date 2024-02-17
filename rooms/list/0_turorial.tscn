@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://by54rrhq421bq"]
 
 [ext_resource type="PackedScene" uid="uid://cxo6oseo5rgfc" path="res://rooms/room_base.tscn" id="1_f0nbh"]
-[ext_resource type="PackedScene" uid="uid://cwffmeeyd6sgu" path="res://monster/test/test_monster.tscn" id="2_llsyr"]
+[ext_resource type="PackedScene" uid="uid://cwffmeeyd6sgu" path="res://monster/monster_base.tscn" id="2_llsyr"]
 
 [node name="TurorialRoom" instance=ExtResource("1_f0nbh")]
 

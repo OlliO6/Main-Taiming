@@ -295,7 +295,7 @@ initial_velocity_max = 2.75
 gravity = Vector3(0, 0, 0)
 alpha_curve = SubResource("CurveTexture_a4sfw")
 
-[node name="TestMonster" type="CharacterBody2D"]
+[node name="Monster" type="CharacterBody2D"]
 material = SubResource("ShaderMaterial_m1f0r")
 collision_layer = 16
 collision_mask = 17
@@ -330,7 +330,7 @@ script = ExtResource("3_4420w")
 [node name="KnockedOut" type="Node" parent="StateMachine"]
 script = ExtResource("3_4420w")
 
-[node name="Evil" type="Node" parent="StateMachine"]
+[node name="Fighting" type="Node" parent="StateMachine"]
 script = ExtResource("3_4420w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

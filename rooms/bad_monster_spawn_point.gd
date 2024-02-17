@@ -17,7 +17,7 @@ func add_monster() -> void:
 	if owner is FightRooom:
 		owner.add_evil_monster(monster)
 	owner.add_child(monster)
-	monster.set_evil(true)
+	monster.is_evil = true
 
 func get_monster() -> Monster:
 	var monster:= possible_monster.pick_random().instantiate() as Monster

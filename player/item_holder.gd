@@ -45,7 +45,7 @@ func release_item(free_basic_vegetables: bool) -> Node2D:
 	var item: Node2D = get_item()
 	remove_child(item)
 	item.position = owner.global_position
-	get_tree().current_scene.add_child(item)
+	owner.get_parent().add_child(item)
 	item_released.emit(item)
 	var item_interface = item.get_node_or_null("Item")
 	if item_interface:
