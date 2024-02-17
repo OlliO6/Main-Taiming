@@ -10,7 +10,8 @@ func open() -> void:
 	is_open = true
 	$DoorCollider.disabled = true
 	$Sprite2D.frame = 1
-	
+	$EnterArea/CollisionShape2D.disabled = false
+
 func _ready() -> void:
 	$Interactable.allow_interaction = allow_interaction
 
@@ -33,3 +34,4 @@ func _on_interacted() -> void:
 func _on_enter_area_body_entered(body: Node2D) -> void:
 	if body is Player:
 		player_entered.emit()
+		print(get_instance_id(), " DAS")

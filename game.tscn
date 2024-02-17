@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgrh1rjccylef"]
+[gd_scene load_steps=8 format=3 uid="uid://cgrh1rjccylef"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_6c2l0"]
 [ext_resource type="PackedScene" uid="uid://cwlnn5fwd7frh" path="res://ui/ingame/ingame_overlay.tscn" id="1_lnhvx"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_r4gmu"]
+[ext_resource type="PackedScene" uid="uid://c076y8slf1upt" path="res://player/player.tscn" id="2_5idx6"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="3_vcs8i"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_7denj"]
 
@@ -21,13 +22,13 @@ script = ExtResource("1_6c2l0")
 [node name="IngameOverlay" parent="CanvasLayer" instance=ExtResource("1_lnhvx")]
 
 [node name="Camera" type="Node2D" parent="."]
-position = Vector2(15, -23)
+position = Vector2(1.4013e-45, -1.4013e-45)
 script = ExtResource("3_vcs8i")
 priority_override = false
 priority = 0
 zoom = Vector2(1.88, 1.88)
 follow_mode = 5
-follow_target = NodePath("")
+follow_target = NodePath("../Player")
 follow_parameters/target_offset = Vector2(0, 0)
 follow_parameters/damping = true
 follow_parameters/damping_value = 2.801
@@ -48,7 +49,7 @@ tween_on_load = false
 inactive_update_mode = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(15, -23)
+position = Vector2(1.4013e-45, -1.4013e-45)
 zoom = Vector2(1.88, 1.88)
 editor_draw_screen = false
 editor_draw_limits = true
@@ -57,3 +58,5 @@ editor_draw_limits = true
 script = ExtResource("1_r4gmu")
 
 [node name="RoomHolder" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("2_5idx6")]

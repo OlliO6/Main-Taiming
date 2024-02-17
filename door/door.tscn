@@ -75,6 +75,7 @@ monitorable = false
 visible = false
 position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_xkiri")
+disabled = true
 
 [connection signal="deselected" from="Interactable" to="InteractLabel" method="hide"]
 [connection signal="interacted" from="Interactable" to="." method="_on_interacted"]

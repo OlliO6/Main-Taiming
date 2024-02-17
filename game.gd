@@ -5,6 +5,7 @@ const room_list_path:= "res://rooms/list/"
 
 @onready var camera: PhantomCamera2D = $Camera
 @onready var room_holder: Node2D = $RoomHolder
+@onready var player: Player = $Player
 
 var current_room: int
 
@@ -29,6 +30,8 @@ func enter_room() -> void:
 		room_holder.remove_child(prev_room)
 		prev_room.queue_free()
 	
+	
+	player.position = room.get_node("PlayerSpawn").position
 	room_holder.add_child(room)
 	camera.set_limit_node(room)
 	camera.update_limit_all_sides()

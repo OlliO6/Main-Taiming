@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxo6oseo5rgfc"]
+[gd_scene load_steps=4 format=3 uid="uid://cxo6oseo5rgfc"]
 
 [ext_resource type="Material" uid="uid://cw3n3jipn63eo" path="res://shader/standart_mat.tres" id="1_gygvs"]
 [ext_resource type="TileSet" uid="uid://cwax0tpinmo87" path="res://tileset/tile_set.tres" id="2_unlx4"]
-[ext_resource type="PackedScene" uid="uid://c076y8slf1upt" path="res://player/player.tscn" id="4_kixpu"]
 [ext_resource type="PackedScene" uid="uid://cukfprpt0817d" path="res://door/door.tscn" id="5_x62i7"]
 
 [node name="Room" type="TileMap"]
@@ -15,4 +14,4 @@ layer_0/tile_data = PackedInt32Array(65541, 131072, 2, 5, 196608, 0, -196603, 19
 [node name="Door" parent="." instance=ExtResource("5_x62i7")]
 position = Vector2(0, -91)
 
-[node name="Player" parent="." instance=ExtResource("4_kixpu")]
+[node name="PlayerSpawn" type="Marker2D" parent="."]
