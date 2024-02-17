@@ -16,7 +16,7 @@ var health: int:
 			died.emit()
 
 func _ready() -> void:
-	full_live.call_deferred()
+	full_live()
 
 func take_damage(damage: int):
 	health -= damage

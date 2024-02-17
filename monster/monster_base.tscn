@@ -409,7 +409,6 @@ explosiveness = 1.0
 
 [connection signal="tamed" from="." to="TameParticles" method="restart"]
 [connection signal="died" from="Health" to="." method="_on_knockout"]
-[connection signal="health_changed" from="Health" to="." method="_on_health_changed"]
 [connection signal="deselected" from="Interactable" to="." method="_on_deselected"]
 [connection signal="interacted" from="Interactable" to="." method="_on_interacted"]
 [connection signal="selected" from="Interactable" to="." method="_on_selected"]

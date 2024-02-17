@@ -41,18 +41,21 @@ var following_player: bool
 var _outline_color: Color
 
 func _ready() -> void:
+	
 	_set_outline_color(Color(0, 0, 0, 0), true)
 	interact_label.hide()
 	health_label.hide()
 	
 	interactable_interface.allow_interaction = _allow_interaction
 	
+	health_interface.health_changed.connect(_on_health_changed)
 	Globals.team_changed.connect(_on_team_changed)
 	Globals.get_game().fight_started.connect(_on_fight_started)
 	Globals.get_game().fight_ended.connect(_on_fight_ended)
 	Globals.get_game().about_to_fight.connect(_on_about_to_fight)
 
 func _physics_process(delta: float) -> void:
+	
 	if (state_machine.state):
 		print(state_machine.state.name)
 	match state_machine.state:
@@ -68,6 +71,7 @@ func _physics_process(delta: float) -> void:
 				follow_player(delta)
 
 func follow_player(delta: float):
+	
 	var player_pos:= Globals.player.position
 	smooth_move_towards(player_pos, follow_speed, follow_damping,\
 		follow_player_dist_fight if fighting_state.is_active() else follow_player_dist, delta)
@@ -173,7 +177,7 @@ func _get_interact_label_text() -> String:
 			return "'e' to tame"
 		
 		preperation_state:
-			return "exclude" if is_in_team() else "include"
+			return "unteam" if is_in_team() else "team"
 		
 		fighting_state:
 			return "follow" if !following_player else "stop"
@@ -198,7 +202,6 @@ func _on_preperation_state_entered() -> void:
 	velocity = Vector2.ZERO
 	health_label.show()
 	health_interface.full_live()
-	_update_health_label(health_interface.max_health, health_interface.health)
 	
 	if !Globals.is_team_full() && !is_in_team():
 		Globals.add_to_team(self)
@@ -206,7 +209,7 @@ func _on_preperation_state_entered() -> void:
 
 func _update_health_label(max: int, current: int, hide_if_max: bool = true) -> void:
 	health_label.text = str(current) + "/" + str(max)
-	health_label.modulate.a = 0 if max == current else 1
+	health_label.modulate.a = 0 if hide_if_max && max == current else 1
 
 func _on_health_changed(health: int) -> void:
 	_update_health_label(health_interface.max_health, health)
@@ -237,14 +240,14 @@ func _on_knocked_out_state_exited() -> void:
 func _on_about_to_fight() -> void:
 	state_machine.switch_state(wait_state)
 	health_label.show()
-	_update_health_label(health_interface.max_health, health_interface.health, false)
+	_update_health_label.call_deferred(health_interface.max_health, health_interface.health, false)
 	_set_anim_state("idle")
 
 func _on_fight_started() -> void:
 	if (is_evil || is_in_team()) && !knocked_out_state.is_active():
 		state_machine.switch_state(fighting_state)
 		following_player = false
-		_update_health_label(health_interface.max_health, health_interface.health)
+	_update_health_label(health_interface.max_health, health_interface.health)
 
 func _on_fight_ended() -> void:
 	if knocked_out_state.is_active():
