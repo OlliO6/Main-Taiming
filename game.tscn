@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cgrh1rjccylef"]
+[gd_scene load_steps=10 format=3 uid="uid://cgrh1rjccylef"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_6c2l0"]
 [ext_resource type="PackedScene" uid="uid://cwlnn5fwd7frh" path="res://ui/ingame/ingame_overlay.tscn" id="1_lnhvx"]
@@ -12,6 +12,47 @@ script = ExtResource("4_7denj")
 duration = 1.5
 transition = 2
 ease = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_g8ed8"]
+font_size = 8
+font_color = Color(0.94902, 0.941176, 0.898039, 1)
+
+[sub_resource type="GDScript" id="GDScript_j5rps"]
+script/source = "extends Label
+
+const MOVE_TEXT = \"'wasd' -> move\"
+const SHOOT_TEXT = \"'left mouse' -> throw vegetable\"
+
+var _move_shown: bool
+var _shoot_shown: bool
+
+func _ready() -> void:
+	text = MOVE_TEXT
+	modulate.a = 0
+	var tween:= create_tween()
+	tween.tween_interval(5)
+	tween.tween_property(self, \"modulate:a\", 1, 2).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_callback(func(): _move_shown = true)
+
+func _input(event: InputEvent) -> void:
+	if _move_shown && (event.is_action(\"move_left\") || event.is_action(\"ui_right\") || event.is_action(\"move_up\") || event.is_action(\"move_down\")):
+		_move_shown = false
+		var tween:= create_tween()
+		tween.tween_interval(1)
+		tween.tween_property(self, \"modulate:a\", 0, 4).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_callback(func(): text = SHOOT_TEXT)
+		tween.tween_interval(3)
+		tween.tween_property(self, \"modulate:a\", 1, 2).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_callback(func(): _shoot_shown = true)
+		return
+	
+	if _shoot_shown && event.is_action(\"shoot\"):
+		_shoot_shown = false
+		var tween:= create_tween()
+		tween.tween_interval(1)
+		tween.tween_property(self, \"modulate:a\", 0, 4).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_callback(queue_free)
+"
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
@@ -60,3 +101,13 @@ script = ExtResource("1_r4gmu")
 [node name="RoomHolder" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("2_5idx6")]
+
+[node name="TutorialLabel" type="Label" parent="Player"]
+offset_left = -60.0
+offset_top = -24.0
+offset_right = 60.0
+offset_bottom = -12.0
+text = "'wasd' -> move"
+label_settings = SubResource("LabelSettings_g8ed8")
+horizontal_alignment = 1
+script = SubResource("GDScript_j5rps")
