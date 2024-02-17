@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://ctd8a5v4lofwk"]
+
+[ext_resource type="PackedScene" uid="uid://cwffmeeyd6sgu" path="res://monster/monster_base.tscn" id="1_pjx80"]
+[ext_resource type="PackedScene" uid="uid://djo6mapewkrxm" path="res://monster/fight_logic/default_fight_logic.tscn" id="2_wsvak"]
+[ext_resource type="Shader" path="res://shader/sheet_outline.gdshader" id="3_3om5h"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4drcu"]
+radius = 10.55
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5v4lw"]
+resource_local_to_scene = true
+shader = ExtResource("3_3om5h")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 1
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/number_of_images = Vector2(1, 1)
+
+[node name="Monster" instance=ExtResource("1_pjx80")]
+follow_speed = 8.0
+in_team_outline_color = Color(0.545098, 0.690196, 0.380392, 0.301961)
+
+[node name="DefaultFightLogic" parent="." index="0" instance=ExtResource("2_wsvak")]
+
+[node name="CollisionShape2D" parent="DefaultFightLogic/AttackArea" index="0"]
+shape = SubResource("CircleShape2D_4drcu")
+debug_color = Color(0.701961, 0, 0.0117647, 0.14902)
+
+[node name="Sprite" parent="." index="5"]
+material = SubResource("ShaderMaterial_5v4lw")
+
+[editable path="DefaultFightLogic"]

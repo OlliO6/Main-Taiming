@@ -3,12 +3,15 @@ extends CharacterBody2D
 
 signal tamed
 signal defeaated
+signal follow_started
+signal follow_ended
 
 @export_group("taming")
 @export var vegetables_needed: int = 3
 @export var tame_outline_color: Color
 @export_group("following")
-@export var follow_max_player_dist: float
+@export var follow_player_dist: float
+@export var follow_player_dist_fight: float
 @export var follow_speed: float
 @export_range(0, 1) var follow_damping: float
 @export_group("")
@@ -54,6 +57,7 @@ func _physics_process(delta: float) -> void:
 				follow_player(delta)
 			else:
 				_set_anim_state("idle")
+			move_and_slide()
 		
 		fighting_state:
 			if following_player:
@@ -61,18 +65,22 @@ func _physics_process(delta: float) -> void:
 
 func follow_player(delta: float):
 	var player_pos:= Globals.player.position
+	smooth_move_towards(player_pos, follow_speed, follow_damping,\
+		follow_player_dist_fight if fighting_state.is_active() else follow_player_dist, delta)
+
+func smooth_move_towards(pos: Vector2, speed: float, damping: float, to_dist: float, delta: float) -> void:
+	
 	var target_velocity: Vector2
 	
-	if player_pos.distance_to(position) < follow_max_player_dist:
+	if pos.distance_to(position) < to_dist:
 		_set_anim_state("idle")
 		target_velocity = Vector2.ZERO
 	else:
 		_set_anim_state("run")
-		var dir:= (player_pos - position).normalized()
-		target_velocity = dir * follow_speed
+		var dir:= (pos - position).normalized()
+		target_velocity = dir * speed
 	
-	velocity = velocity.lerp(target_velocity, (1 - follow_damping) * delta)
-	move_and_slide()
+	velocity = velocity.lerp(target_velocity, (1 - damping) * delta)
 
 func is_in_team() -> bool:
 	return self in Globals.team
@@ -106,7 +114,7 @@ func is_feedable() -> bool:
 		knocked_out_state:
 			return Game.game_state == Game.GameState.PREPERATION
 		fighting_state:
-			return is_in_team()
+			return is_in_team() && !health_interface.is_full_health()
 	
 	return !health_interface.is_full_health()
 
@@ -142,6 +150,7 @@ func _on_interacted() -> void:
 		
 	elif fighting_state.is_active():
 		following_player = !following_player
+		(follow_started if following_player else follow_ended).emit()
 		interact_label.text = _get_interact_label_text()
 
 func _on_interact_area_body_entered(body: Node2D) -> void:
@@ -182,9 +191,14 @@ func _on_taming_phase_2_state_exited() -> void:
 	_set_outline_color(Color(0, 0, 0, 0), true)
 
 func _on_preperation_state_entered() -> void:
+	velocity = Vector2.ZERO
 	health_label.show()
 	health_interface.full_live()
 	_update_health_label(health_interface.max_health, health_interface.health)
+	
+	if !Globals.is_team_full():
+		Globals.add_to_team(self)
+		interact_label.text = _get_interact_label_text()
 
 func _update_health_label(max: int, current: int) -> void:
 	health_label.text = str(current) + "/" + str(max)
@@ -205,20 +219,22 @@ func _on_deselected() -> void:
 	_set_outline_color(_outline_color, false)
 
 func _on_knockout() -> void:
+	state_machine.switch_state(knocked_out_state)
 	health_label.visible = Game.game_state == Game.GameState.PREPERATION
 	_set_outline_color(knocked_outline_color, true)
-	animation_tree.set("parameters/state/transition_request", 2)
+	_set_anim_state("knocked")
 	defeaated.emit()
 
 func _on_knocked_out_state_exited() -> void:
 	health_label.hide()
 	_set_outline_color(Color(0, 0, 0, 0), true)
-	animation_tree.set("parameters/knocked_switch/transition_request", 0)
+	_set_anim_state("idle")
 
 func _on_fight_started() -> void:
 	if (is_evil || is_in_team()) && !knocked_out_state.is_active():
 		state_machine.switch_state(fighting_state)
 		following_player = false
+		_update_health_label(health_interface.max_health, health_interface.health)
 
 func _on_fight_ended() -> void:
 	if knocked_out_state.is_active():
@@ -228,3 +244,5 @@ func _on_fight_ended() -> void:
 		if is_evil:
 			is_evil = false
 			state_machine.switch_state(taming_phase_1_state)
+	else:
+		state_machine.switch_state(preperation_state)

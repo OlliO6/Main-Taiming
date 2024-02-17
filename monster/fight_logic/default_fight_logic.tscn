@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://djo6mapewkrxm"]
+
+[ext_resource type="Script" path="res://monster/fight_logic/move_fight_logic.gd" id="1_sgay1"]
+[ext_resource type="Script" path="res://monster/fight_logic/attack_area.gd" id="2_mh4iv"]
+
+[node name="DefaultFightLogic" type="Node2D"]
+script = ExtResource("1_sgay1")
+
+[node name="AttackArea" type="Area2D" parent="." node_paths=PackedStringArray("fight_logic")]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+script = ExtResource("2_mh4iv")
+attack_time = 0.5
+time_between_attacks = 1.0
+fight_logic = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]

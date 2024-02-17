@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://components/state.gd" id="3_4420w"]
 [ext_resource type="Script" path="res://components/health.gd" id="3_xunb3"]
 [ext_resource type="Script" path="res://components/interactable.gd" id="4_jcere"]
-[ext_resource type="Texture2D" uid="uid://bh201qypfnlf7" path="res://monster/monster.png" id="4_wbmr4"]
+[ext_resource type="Texture2D" uid="uid://bh201qypfnlf7" path="res://monster/variations/monster.png" id="8_i5evf"]
 [ext_resource type="Texture2D" uid="uid://b72i575srys6a" path="res://monster/tame_particle.png" id="8_sljtx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1f0r"]
@@ -18,8 +18,8 @@ shader_parameter/inside = false
 shader_parameter/add_margins = true
 shader_parameter/number_of_images = Vector2(1, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_db0ey"]
-size = Vector2(12.1081, 9)
+[sub_resource type="CircleShape2D" id="CircleShape2D_n66sg"]
+radius = 5.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nut2t"]
 resource_local_to_scene = true
@@ -265,8 +265,8 @@ nodes/state/node = SubResource("AnimationNodeTransition_cso2k")
 nodes/state/position = Vector2(240, 60)
 node_connections = [&"feed", 0, &"state", &"feed", 1, &"Animation 3", &"output", 0, &"feed", &"run_speed", 0, &"Animation 2", &"state", 0, &"Animation", &"state", 1, &"run_speed", &"state", 2, &"Animation 4"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wu04j"]
-size = Vector2(23, 18.5)
+[sub_resource type="CircleShape2D" id="CircleShape2D_db3bl"]
+radius = 11.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_4hu0g"]
 font_size = 8
@@ -295,13 +295,13 @@ initial_velocity_max = 2.75
 gravity = Vector3(0, 0, 0)
 alpha_curve = SubResource("CurveTexture_a4sfw")
 
-[node name="Monster" type="CharacterBody2D"]
+[node name="Monster" type="CharacterBody2D" groups=["monster"]]
 material = SubResource("ShaderMaterial_m1f0r")
 collision_layer = 16
 collision_mask = 17
 script = ExtResource("1_e686l")
 tame_outline_color = Color(0.827451, 0.627451, 0.407843, 1)
-follow_max_player_dist = 15.0
+follow_player_dist = 15.0
 follow_speed = 12.0
 follow_damping = 0.1
 selected_outline_color = Color(0.811765, 0.541176, 0.796078, 1)
@@ -334,13 +334,12 @@ script = ExtResource("3_4420w")
 script = ExtResource("3_4420w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
-shape = SubResource("RectangleShape2D_db0ey")
+shape = SubResource("CircleShape2D_n66sg")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_nut2t")
 position = Vector2(0, -5)
-texture = ExtResource("4_wbmr4")
+texture = ExtResource("8_i5evf")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -370,7 +369,8 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
 position = Vector2(0, -1)
-shape = SubResource("RectangleShape2D_wu04j")
+shape = SubResource("CircleShape2D_db3bl")
+debug_color = Color(0, 0.701961, 0.407843, 0.156863)
 
 [node name="InteractLabel" type="Label" parent="."]
 visible = false

@@ -1,9 +1,117 @@
-[gd_scene load_steps=3 format=3 uid="uid://by54rrhq421bq"]
+[gd_scene load_steps=7 format=3 uid="uid://by54rrhq421bq"]
 
 [ext_resource type="PackedScene" uid="uid://cxo6oseo5rgfc" path="res://rooms/room_base.tscn" id="1_f0nbh"]
-[ext_resource type="PackedScene" uid="uid://cwffmeeyd6sgu" path="res://monster/monster_base.tscn" id="2_llsyr"]
+[ext_resource type="PackedScene" uid="uid://ctd8a5v4lofwk" path="res://monster/variations/1.tscn" id="2_vjmem"]
+[ext_resource type="PackedScene" uid="uid://5bntft4da0sv" path="res://items/vegetables/basic_vegetable/basic_vegetable.tscn" id="3_ewo0y"]
+[ext_resource type="Shader" path="res://shader/sheet_outline.gdshader" id="3_sbqo3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oi2nn"]
+resource_local_to_scene = true
+shader = ExtResource("3_sbqo3")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 1
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/number_of_images = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yguka"]
+resource_local_to_scene = true
+shader = ExtResource("3_sbqo3")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 1
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/number_of_images = Vector2(1, 1)
 
 [node name="TurorialRoom" instance=ExtResource("1_f0nbh")]
 
-[node name="TestMonster" parent="." index="2" instance=ExtResource("2_llsyr")]
-position = Vector2(0, -30)
+[node name="Monster" parent="." index="2" instance=ExtResource("2_vjmem")]
+position = Vector2(0, -31)
+
+[node name="Health" parent="Monster" index="1"]
+max_health = 4
+
+[node name="Sprite" parent="Monster" index="5"]
+material = SubResource("ShaderMaterial_oi2nn")
+
+[node name="Monster2" parent="." index="3" instance=ExtResource("2_vjmem")]
+position = Vector2(34, -22)
+
+[node name="Health" parent="Monster2" index="1"]
+max_health = 4
+
+[node name="Sprite" parent="Monster2" index="5"]
+material = SubResource("ShaderMaterial_yguka")
+
+[node name="Vegetable" parent="." index="4" instance=ExtResource("3_ewo0y")]
+position = Vector2(-51, -27)
+
+[node name="Vegetable2" parent="." index="5" instance=ExtResource("3_ewo0y")]
+position = Vector2(-52, -20)
+
+[node name="Vegetable3" parent="." index="6" instance=ExtResource("3_ewo0y")]
+position = Vector2(-51, -27)
+
+[node name="Vegetable4" parent="." index="7" instance=ExtResource("3_ewo0y")]
+position = Vector2(-52, -20)
+
+[node name="Vegetable5" parent="." index="8" instance=ExtResource("3_ewo0y")]
+position = Vector2(-51, -27)
+
+[node name="Vegetable6" parent="." index="9" instance=ExtResource("3_ewo0y")]
+position = Vector2(-52, -20)
+
+[node name="Vegetable7" parent="." index="10" instance=ExtResource("3_ewo0y")]
+position = Vector2(-51, -27)
+
+[node name="Vegetable8" parent="." index="11" instance=ExtResource("3_ewo0y")]
+position = Vector2(-52, -20)
+
+[node name="Vegetable9" parent="." index="12" instance=ExtResource("3_ewo0y")]
+position = Vector2(-51, -27)
+
+[node name="Vegetable10" parent="." index="13" instance=ExtResource("3_ewo0y")]
+position = Vector2(-52, -20)
+
+[node name="Vegetable11" parent="." index="14" instance=ExtResource("3_ewo0y")]
+position = Vector2(-51, -27)
+
+[node name="Vegetable12" parent="." index="15" instance=ExtResource("3_ewo0y")]
+position = Vector2(-52, -20)
+
+[node name="Vegetable13" parent="." index="16" instance=ExtResource("3_ewo0y")]
+position = Vector2(-51, -27)
+
+[node name="Vegetable14" parent="." index="17" instance=ExtResource("3_ewo0y")]
+position = Vector2(-52, -20)
+
+[node name="Vegetable15" parent="." index="18" instance=ExtResource("3_ewo0y")]
+position = Vector2(-51, -27)
+
+[node name="Vegetable16" parent="." index="19" instance=ExtResource("3_ewo0y")]
+position = Vector2(-52, -20)
+
+[node name="Vegetable17" parent="." index="20" instance=ExtResource("3_ewo0y")]
+position = Vector2(-51, -27)
+
+[node name="Vegetable18" parent="." index="21" instance=ExtResource("3_ewo0y")]
+position = Vector2(-52, -20)
+
+[node name="Vegetable19" parent="." index="22" instance=ExtResource("3_ewo0y")]
+position = Vector2(-51, -27)
+
+[node name="Vegetable20" parent="." index="23" instance=ExtResource("3_ewo0y")]
+position = Vector2(-52, -20)
+
+[node name="Vegetable21" parent="." index="24" instance=ExtResource("3_ewo0y")]
+position = Vector2(-51, -27)
+
+[node name="Vegetable22" parent="." index="25" instance=ExtResource("3_ewo0y")]
+position = Vector2(-52, -20)
+
+[editable path="Monster"]
+[editable path="Monster/DefaultFightLogic"]
+[editable path="Monster2"]
+[editable path="Monster2/DefaultFightLogic"]

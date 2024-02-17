@@ -23,9 +23,6 @@ func _ready() -> void:
 	var rooms_dir:= DirAccess.open(room_list_path)
 	_room_files = rooms_dir.get_files()
 	enter_room()
-	
-	fight_started.connect(func(): print("START"))
-	fight_ended.connect(func(): print("END"))
 
 func _exit_tree() -> void:
 	game_state = GameState.NOT_IN_GAME
