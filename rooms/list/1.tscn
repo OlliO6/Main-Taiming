@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://cq7hyt5rc3lnv"]
+
+[ext_resource type="PackedScene" uid="uid://cxo6oseo5rgfc" path="res://rooms/room_base.tscn" id="1_rsbiq"]
+[ext_resource type="PackedScene" uid="uid://cwffmeeyd6sgu" path="res://monster/test/test_monster.tscn" id="2_uw5w1"]
+
+[node name="Room" instance=ExtResource("1_rsbiq")]
+
+[node name="TestMonster" parent="." index="2" instance=ExtResource("2_uw5w1")]
+position = Vector2(-47, -29)
+
+[node name="TestMonster2" parent="." index="3" instance=ExtResource("2_uw5w1")]
+position = Vector2(22, -33)

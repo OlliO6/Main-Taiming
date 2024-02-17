@@ -17,7 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Globals="*res://singeltons/globals.gd"
+Globals="*res://singletons/globals.gd"
+Transitions="*res://singletons/transitions/transitions.tscn"
 
 [display]
 
