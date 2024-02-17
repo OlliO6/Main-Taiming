@@ -16,7 +16,7 @@ func _ready() -> void:
 	$Interactable.allow_interaction = allow_interaction
 
 func allow_interaction() -> bool:
-	return !is_open && Globals.game_state != Globals.GameState.FIGHT
+	return !is_open && Game.game_state != Game.GameState.FIGHT
 
 func _on_interacted() -> void:
 	if Globals.team.size() < 1:
@@ -34,4 +34,3 @@ func _on_interacted() -> void:
 func _on_enter_area_body_entered(body: Node2D) -> void:
 	if body is Player:
 		player_entered.emit()
-		print(get_instance_id(), " DAS")

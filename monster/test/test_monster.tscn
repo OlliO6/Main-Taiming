@@ -301,9 +301,9 @@ collision_layer = 16
 collision_mask = 17
 script = ExtResource("1_e686l")
 tame_outline_color = Color(0.827451, 0.627451, 0.407843, 1)
-follow_max_player_dist = 30.0
-follow_speed = 15.0
-follow_damping = 0.15
+follow_max_player_dist = 15.0
+follow_speed = 12.0
+follow_damping = 0.1
 selected_outline_color = Color(0.811765, 0.541176, 0.796078, 1)
 in_team_outline_color = Color(0.545098, 0.690196, 0.380392, 0)
 knocked_outline_color = Color(0.705882, 0.321569, 0.321569, 1)
@@ -314,7 +314,7 @@ script = ExtResource("3_xunb3")
 [node name="Interactable" type="Node" parent="."]
 script = ExtResource("4_jcere")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("start_state")]
 script = ExtResource("2_wxuav")
 start_state = NodePath("TamingPhase1")
 
@@ -328,6 +328,9 @@ script = ExtResource("3_4420w")
 script = ExtResource("3_4420w")
 
 [node name="KnockedOut" type="Node" parent="StateMachine"]
+script = ExtResource("3_4420w")
+
+[node name="Evil" type="Node" parent="StateMachine"]
 script = ExtResource("3_4420w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

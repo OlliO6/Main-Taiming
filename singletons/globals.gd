@@ -3,11 +3,12 @@ extends Node
 signal team_changed
 signal vegetable_count_changed
 
-enum GameState { FIGHT, PREPERATION }
-
 const BASIC_VEGETABLE_SCENE: PackedScene = preload("res://items/vegetables/basic_vegetable/basic_vegetable.tscn")
 
 var player: Player
+
+var max_team: int = 3
+var team:= [] as Array[Monster]
 
 var vegetable_count: int = 5:
 	set(v):
@@ -16,10 +17,8 @@ var vegetable_count: int = 5:
 	get: 
 		return vegetable_count
 
-var max_team: int = 3
-var team:= [] as Array[Monster]
-
-var game_state: GameState = GameState.PREPERATION
+func get_game() -> Game:
+	return get_tree().current_scene as Game
 
 func is_team_full() -> bool:
 	return team.size() >= max_team

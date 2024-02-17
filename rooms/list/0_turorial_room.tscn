@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://by54rrhq421bq"]
-
-[ext_resource type="PackedScene" uid="uid://cxo6oseo5rgfc" path="res://rooms/room_base.tscn" id="1_lko88"]
-[ext_resource type="PackedScene" uid="uid://cwffmeeyd6sgu" path="res://monster/test/test_monster.tscn" id="2_0temc"]
-
-[node name="TurorialRoom" instance=ExtResource("1_lko88")]
-
-[node name="TestMonster" parent="." index="2" instance=ExtResource("2_0temc")]
-position = Vector2(-1, -43)

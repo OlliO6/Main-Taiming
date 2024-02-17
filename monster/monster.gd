@@ -2,6 +2,7 @@ class_name Monster
 extends CharacterBody2D
 
 signal tamed
+signal defeaated
 
 @export_group("taming")
 @export var vegetables_needed: int = 3
@@ -27,6 +28,7 @@ signal tamed
 @onready var health_interface: Health = $Health
 @onready var health_label: Label = $HealthLabel
 @onready var interactable_interface: Interactable = $Interactable
+@onready var evil_state: State = $StateMachine/Evil
 
 var vegetables_feeded: int
 var _outline_color: Color
@@ -37,9 +39,11 @@ func _ready() -> void:
 	health_label.hide()
 	
 	interactable_interface.allow_interaction = func() -> bool:
-		return state_machine.state == taming_phase_2_state || state_machine.state == preperation_state
+		return taming_phase_2_state.is_active() || preperation_state.is_active()
 	
 	Globals.team_changed.connect(_on_team_changed)
+	Globals.get_game().fight_started.connect(_on_fight_started)
+	Globals.get_game().fight_ended.connect(_on_fight_ended)
 
 func _physics_process(delta: float) -> void:
 	
@@ -65,6 +69,15 @@ func follow_player(delta: float):
 	velocity = velocity.lerp(target_velocity, (1 - follow_damping) * delta)
 	move_and_slide()
 
+func is_evil() -> bool:
+	return evil_state.is_active() || (state_machine.prev_state == evil_state && knocked_out_state.is_active())
+
+func set_evil(evil: bool) -> void:
+	if state_machine.state == null:
+		state_machine.start_state = evil_state if evil else taming_phase_1_state
+	else:
+		state_machine.switch_state(evil_state if evil else taming_phase_1_state)
+
 func is_in_team() -> bool:
 	return self in Globals.team
 
@@ -72,7 +85,7 @@ func feed(vegetable: Vegetable) -> void:
 	
 	animation_tree.set("parameters/feed/request", 1)
 	
-	if state_machine.state == taming_phase_1_state:
+	if taming_phase_1_state.is_active():
 		vegetables_feeded += vegetable.vegetables_count
 		vegetable.consume()
 		_update_health_label(vegetables_needed, vegetables_feeded)
@@ -95,7 +108,7 @@ func is_feedable() -> bool:
 		taming_phase_2_state:
 			return false
 		knocked_out_state:
-			return Globals.game_state == Globals.GameState.PREPERATION
+			return Game.game_state == Game.GameState.PREPERATION
 	
 	return !health_interface.is_full_health()
 
@@ -114,9 +127,9 @@ func _on_team_changed() -> void:
 		_set_outline_color(Color(0, 0, 0, 0), true)
 
 func _on_interacted() -> void:
-	if state_machine.state == taming_phase_2_state:
+	if taming_phase_2_state.is_active():
 		finish_tame()
-	elif state_machine.state == preperation_state:
+	elif preperation_state.is_active():
 		if is_in_team():
 			Globals.remove_from_team(self)
 		else:
@@ -169,7 +182,7 @@ func _update_health_label(max: int, current: int) -> void:
 func _on_health_changed(health: int) -> void:
 	_update_health_label(health_interface.max_health, health)
 	
-	if state_machine.state == knocked_out_state && health_interface.is_full_health():
+	if knocked_out_state.is_active() && health_interface.is_full_health():
 		state_machine.switch_state(preperation_state)
 
 func _on_selected() -> void:
@@ -181,22 +194,24 @@ func _on_deselected() -> void:
 	_set_outline_color(_outline_color, false)
 
 func _on_knockout() -> void:
-	health_label.visible = Globals.game_state == Globals.GameState.PREPERATION
+	health_label.visible = Game.game_state == Game.GameState.PREPERATION
 	_set_outline_color(knocked_outline_color, true)
 	animation_tree.set("parameters/state/transition_request", 2)
+	defeaated.emit()
 
 func _on_knocked_out_state_exited() -> void:
 	health_label.hide()
 	_set_outline_color(Color(0, 0, 0, 0), true)
 	animation_tree.set("parameters/knocked_switch/transition_request", 0)
 
-#TODO: call
 func _on_fight_started() -> void:
 	pass
 
-#TODO: call
 func _on_fight_ended() -> void:
-	if state_machine.state == knocked_out_state:
-		health_label.show()
-		Globals.remove_from_team(self)
+	if knocked_out_state.is_active():
+		if is_in_team():
+			health_label.show()
+			Globals.remove_from_team(self)
+		if is_evil():
+			set_evil(false)
 

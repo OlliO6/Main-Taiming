@@ -37,7 +37,11 @@
 		{
 			"uuid": "7061cc17-fa6d-43bd-bf6b-de001af21de3",
 			"title": "Ideas",
-			"tasks": []
+			"tasks": [
+				"9e52144e-8a20-4592-855a-2cd5d80070ae",
+				"978f4042-108b-4460-a6ff-289098bcd847",
+				"b8393da4-a97a-4e15-8629-edde75c3e002"
+			]
 		},
 		{
 			"uuid": "ed1b883c-c197-4ab9-b785-59b10ac0986e",
@@ -121,6 +125,27 @@
 		{
 			"uuid": "f846b7f6-b853-4304-b56c-54342e9ad606",
 			"title": "Room Art",
+			"description": "",
+			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"steps": []
+		},
+		{
+			"uuid": "9e52144e-8a20-4592-855a-2cd5d80070ae",
+			"title": "Gegner fokussieren",
+			"description": "",
+			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"steps": []
+		},
+		{
+			"uuid": "978f4042-108b-4460-a6ff-289098bcd847",
+			"title": "Nahkampf tank und scharfschütze",
+			"description": "",
+			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"steps": []
+		},
+		{
+			"uuid": "b8393da4-a97a-4e15-8629-edde75c3e002",
+			"title": "wegrennen wenn monster low",
 			"description": "",
 			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
 			"steps": []
