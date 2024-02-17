@@ -18,7 +18,7 @@ func add_monster() -> void:
 		owner.add_evil_monster(monster)
 	owner.add_child(monster)
 	monster.is_evil = true
-	monster.state_machine.switch_state.call_deferred(monster.fighting_state)
+	monster.state_machine.switch_state.call_deferred(monster.wait_state)
 
 func get_monster() -> Monster:
 	var monster:= possible_monster.pick_random().instantiate() as Monster

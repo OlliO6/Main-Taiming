@@ -3,6 +3,7 @@ extends Node2D
 
 signal fight_started
 signal fight_ended
+signal about_to_fight
 
 const room_list_path:= "res://rooms/list/"
 
@@ -29,6 +30,9 @@ func _exit_tree() -> void:
 
 static func in_game() -> bool:
 	return game_state != GameState.NOT_IN_GAME
+
+func about_to_start_fight() -> void:
+	about_to_fight.emit()
 
 func start_fight():
 	game_state = GameState.FIGHT

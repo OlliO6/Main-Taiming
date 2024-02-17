@@ -32,6 +32,7 @@ signal follow_ended
 @onready var health_label: Label = $HealthLabel
 @onready var interactable_interface: Interactable = $Interactable
 @onready var fighting_state: State = $StateMachine/Fighting
+@onready var wait_state: State = $StateMachine/Wait
 
 var is_evil: bool
 var vegetables_feeded: int
@@ -49,8 +50,11 @@ func _ready() -> void:
 	Globals.team_changed.connect(_on_team_changed)
 	Globals.get_game().fight_started.connect(_on_fight_started)
 	Globals.get_game().fight_ended.connect(_on_fight_ended)
+	Globals.get_game().about_to_fight.connect(_on_about_to_fight)
 
 func _physics_process(delta: float) -> void:
+	if (state_machine.state):
+		print(state_machine.state.name)
 	match state_machine.state:
 		preperation_state:
 			if is_in_team():
@@ -196,11 +200,11 @@ func _on_preperation_state_entered() -> void:
 	health_interface.full_live()
 	_update_health_label(health_interface.max_health, health_interface.health)
 	
-	if !Globals.is_team_full():
+	if !Globals.is_team_full() && !is_in_team():
 		Globals.add_to_team(self)
 		interact_label.text = _get_interact_label_text()
 
-func _update_health_label(max: int, current: int) -> void:
+func _update_health_label(max: int, current: int, hide_if_max: bool = true) -> void:
 	health_label.text = str(current) + "/" + str(max)
 	health_label.modulate.a = 0 if max == current else 1
 
@@ -228,6 +232,12 @@ func _on_knockout() -> void:
 func _on_knocked_out_state_exited() -> void:
 	health_label.hide()
 	_set_outline_color(Color(0, 0, 0, 0), true)
+	_set_anim_state("idle")
+
+func _on_about_to_fight() -> void:
+	state_machine.switch_state(wait_state)
+	health_label.show()
+	_update_health_label(health_interface.max_health, health_interface.health, false)
 	_set_anim_state("idle")
 
 func _on_fight_started() -> void:

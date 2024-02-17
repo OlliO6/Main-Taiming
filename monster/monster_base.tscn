@@ -301,7 +301,8 @@ collision_layer = 16
 collision_mask = 17
 script = ExtResource("1_e686l")
 tame_outline_color = Color(0.827451, 0.627451, 0.407843, 1)
-follow_player_dist = 15.0
+follow_player_dist = 30.0
+follow_player_dist_fight = 15.0
 follow_speed = 12.0
 follow_damping = 0.1
 selected_outline_color = Color(0.811765, 0.541176, 0.796078, 1)
@@ -328,6 +329,9 @@ script = ExtResource("3_4420w")
 script = ExtResource("3_4420w")
 
 [node name="KnockedOut" type="Node" parent="StateMachine"]
+script = ExtResource("3_4420w")
+
+[node name="Wait" type="Node" parent="StateMachine"]
 script = ExtResource("3_4420w")
 
 [node name="Fighting" type="Node" parent="StateMachine"]
