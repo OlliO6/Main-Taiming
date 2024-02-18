@@ -231,6 +231,8 @@ func _on_knockout() -> void:
 	_set_outline_color(knocked_outline_color, true)
 	_set_anim_state("knocked")
 	defeaated.emit()
+	if is_in_team():
+			Globals.remove_from_team(self)
 
 func _on_knocked_out_state_exited() -> void:
 	health_label.hide()

@@ -1,9 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://0oryk87ixyu2"]
+[gd_scene load_steps=4 format=3 uid="uid://0oryk87ixyu2"]
 
 [ext_resource type="PackedScene" uid="uid://cepco1sn0sq6c" path="res://rooms/fight_room_base.tscn" id="1_lqpf6"]
 [ext_resource type="PackedScene" uid="uid://dpqfqovubbcjj" path="res://monster/variations/2.tscn" id="2_7t2ih"]
+[ext_resource type="PackedScene" uid="uid://5bntft4da0sv" path="res://items/vegetables/basic_vegetable/basic_vegetable.tscn" id="3_rih4u"]
 
 [node name="FightRoom" instance=ExtResource("1_lqpf6")]
 
 [node name="BadMonster" parent="SpawnPositions" index="1"]
 possible_monster = Array[PackedScene]([ExtResource("2_7t2ih")])
+
+[node name="Vegetable" parent="Vegis" index="0" instance=ExtResource("3_rih4u")]
+position = Vector2(-67, 4)
+
+[node name="Vegetable2" parent="Vegis" index="1" instance=ExtResource("3_rih4u")]
+position = Vector2(-40, 23)
+
+[node name="Vegetable3" parent="Vegis" index="2" instance=ExtResource("3_rih4u")]
+position = Vector2(24, 24)
+
+[node name="Vegetable4" parent="Vegis" index="3" instance=ExtResource("3_rih4u")]
+position = Vector2(36, 25)
+
+[node name="Vegetable5" parent="Vegis" index="4" instance=ExtResource("3_rih4u")]
+position = Vector2(50, 23)
+
+[node name="Vegetable6" parent="Vegis" index="5" instance=ExtResource("3_rih4u")]
+position = Vector2(69, 7)

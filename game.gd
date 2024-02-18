@@ -19,11 +19,15 @@ var current_room: int
 var _room_files: PackedStringArray
 
 func _ready() -> void:
+	
+	Transitions.end_transition(Transitions.BLACK_FADE, 0.5, func():)
+	
 	game_state = GameState.PREPERATION
 	
 	var rooms_dir:= DirAccess.open(room_list_path)
 	_room_files = rooms_dir.get_files()
 	enter_room()
+	Globals.team_changed.connect(_on_team_changed)
 
 func _exit_tree() -> void:
 	game_state = GameState.NOT_IN_GAME
@@ -93,3 +97,22 @@ func _on_room_exited() -> void:
 		current_room += 1
 		enter_room()
 		Transitions.end_transition(Transitions.BLACK_FADE, 1, func(): return))
+
+func _on_team_changed() -> void:
+	if Globals.team.size() == 0 && game_state == GameState.FIGHT:
+		process_mode = Node.PROCESS_MODE_DISABLED
+		var tween:= $Music.create_tween()
+		tween.tween_property($CanvasLayer/GameOver, "modulate:a", 1.0, 10).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_interval(5)
+		tween.tween_callback(func():
+			Transitions.start_transition(Transitions.BLACK_FADE, 1, func():
+				get_tree().reload_current_scene()))
+
+func enter_last_door() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+	var tween:= $Music.create_tween()
+	tween.tween_property($CanvasLayer/GameOver, "modulate:a", 1.0, 10).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_interval(5)
+	tween.tween_callback(func():
+		Transitions.start_transition(Transitions.BLACK_FADE, 1, func():
+			get_tree().reload_current_scene()))

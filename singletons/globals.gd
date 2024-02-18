@@ -7,14 +7,18 @@ const BASIC_VEGETABLE_SCENE: PackedScene = preload("res://items/vegetables/basic
 
 var player: Player
 
-var max_team: int = 3
 var team:= [] as Array[Monster]
+
+var max_team: int = 3:
+	set(v):
+		team_changed.emit()
+		max_team = v
 
 var vegetable_count: int = 5:
 	set(v):
 		vegetable_count_changed.emit()
 		vegetable_count = v
-	get: 
+	get:
 		return vegetable_count
 
 func get_game() -> Game:

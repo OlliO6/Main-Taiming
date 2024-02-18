@@ -13,7 +13,7 @@ config_version=5
 config/name="Main Taiming"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [autoload]
 
@@ -24,6 +24,8 @@ Transitions="*res://singletons/transitions/transitions.tscn"
 
 window/size/viewport_width=480
 window/size/viewport_height=270
+window/size/window_width_override=960
+window/size/window_height_override=540
 window/stretch/mode="canvas_items"
 
 [dotnet]

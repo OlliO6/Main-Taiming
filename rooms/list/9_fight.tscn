@@ -38,11 +38,8 @@ position = Vector2(71, -56)
 [node name="Vegetable3" parent="Vegis" index="4" instance=ExtResource("7_hkuli")]
 position = Vector2(-5, 23)
 
-[node name="Vegetable4" parent="Vegis" index="5" instance=ExtResource("7_hkuli")]
-position = Vector2(20, 23)
-
-[node name="Vegetable5" parent="Vegis" index="6" instance=ExtResource("7_hkuli")]
+[node name="Vegetable5" parent="Vegis" index="5" instance=ExtResource("7_hkuli")]
 position = Vector2(56, -88)
 
-[node name="Vegetable6" parent="Vegis" index="7" instance=ExtResource("7_hkuli")]
+[node name="Vegetable6" parent="Vegis" index="6" instance=ExtResource("7_hkuli")]
 position = Vector2(56, -103)

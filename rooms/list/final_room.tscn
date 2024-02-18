@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://d1htqbiu0vncx"]
+[gd_scene load_steps=24 format=3 uid="uid://d1htqbiu0vncx"]
 
 [ext_resource type="PackedScene" uid="uid://cxo6oseo5rgfc" path="res://rooms/room_base.tscn" id="1_4e51w"]
 [ext_resource type="Script" path="res://components/interactable.gd" id="2_rykji"]
 [ext_resource type="Material" uid="uid://cw3n3jipn63eo" path="res://shader/standart_mat.tres" id="3_cce21"]
 [ext_resource type="Texture2D" uid="uid://dtmbocjiiebeh" path="res://monster/variations/door_monster/door_monster.png" id="4_pxhvb"]
 [ext_resource type="Texture2D" uid="uid://b72i575srys6a" path="res://monster/tame_particle.png" id="5_qeuf4"]
+[ext_resource type="Texture2D" uid="uid://fe0ign7rmqo1" path="res://rooms/door/door.png" id="5_uaf3c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6xxpl"]
 size = Vector2(22, 20)
@@ -18,6 +19,20 @@ font_color = Color(0.94902, 0.941176, 0.898039, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_r3n27"]
 font_size = 6
 font_color = Color(0.94902, 0.941176, 0.898039, 1)
+
+[sub_resource type="GDScript" id="GDScript_mrdou"]
+script/source = "extends Area2D
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body is Player:
+		Globals.get_game().enter_last_door()
+
+
+func _on_interacted() -> void:
+	$CollisionShape2D.disabled = false
+	$\"../DoorCollider/Timer\".start()
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xkiri"]
 size = Vector2(22, 10)
@@ -306,9 +321,17 @@ texture = ExtResource("4_pxhvb")
 hframes = 2
 frame = 1
 
+[node name="Frame2" type="Sprite2D" parent="DoorFrame/Frame" index="0"]
+material = ExtResource("3_cce21")
+texture = ExtResource("5_uaf3c")
+hframes = 2
+
 [node name="DoorCollider" type="CollisionShape2D" parent="DoorFrame" index="2"]
 visible = false
 shape = SubResource("RectangleShape2D_6xxpl")
+
+[node name="Timer" type="Timer" parent="DoorFrame/DoorCollider" index="0"]
+one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorFrame" index="3"]
 visible = false
@@ -344,6 +367,7 @@ horizontal_alignment = 1
 collision_layer = 0
 collision_mask = 2
 monitorable = false
+script = SubResource("GDScript_mrdou")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorFrame/EnterArea" index="0"]
 visible = false
@@ -379,8 +403,10 @@ explosiveness = 0.74
 
 [connection signal="deselected" from="DoorFrame/Interactable" to="DoorFrame/InteractLabel" method="hide"]
 [connection signal="interacted" from="DoorFrame/Interactable" to="DoorFrame/InteractLabel" method="hide"]
+[connection signal="interacted" from="DoorFrame/Interactable" to="DoorFrame/EnterArea" method="_on_interacted"]
 [connection signal="interacted" from="DoorFrame/Interactable" to="DoorMonster" method="activate"]
 [connection signal="interacted" from="DoorFrame/Interactable" to="DoorMonster/Sprite/TameParticles" method="restart"]
-[connection signal="interacted" from="DoorFrame/Interactable" to="DoorFrame/DoorCollider" method="set_disabled" binds= [true]]
+[connection signal="interacted" from="DoorFrame/Interactable" to="DoorFrame/Frame/Frame2" method="hide"]
 [connection signal="selected" from="DoorFrame/Interactable" to="DoorFrame/InteractLabel" method="show"]
-[connection signal="body_entered" from="DoorFrame/EnterArea" to="DoorFrame" method="_on_enter_area_body_entered"]
+[connection signal="timeout" from="DoorFrame/DoorCollider/Timer" to="DoorFrame/DoorCollider" method="set_disabled" binds= [true]]
+[connection signal="body_entered" from="DoorFrame/EnterArea" to="DoorFrame/EnterArea" method="_on_body_entered"]
