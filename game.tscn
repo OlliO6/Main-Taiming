@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cgrh1rjccylef"]
+[gd_scene load_steps=13 format=3 uid="uid://cgrh1rjccylef"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_6c2l0"]
 [ext_resource type="PackedScene" uid="uid://cwlnn5fwd7frh" path="res://ui/ingame/ingame_overlay.tscn" id="1_lnhvx"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://c076y8slf1upt" path="res://player/player.tscn" id="2_5idx6"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="3_vcs8i"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_7denj"]
+[ext_resource type="Script" path="res://music/music.gd" id="7_70id3"]
+[ext_resource type="AudioStream" uid="uid://c0hp4uywtqmp4" path="res://music/chords_melody.mp3" id="8_jk5km"]
+[ext_resource type="AudioStream" uid="uid://cesk8h2faf33o" path="res://music/drums.mp3" id="9_imlaf"]
 
 [sub_resource type="Resource" id="Resource_mrrpf"]
 script = ExtResource("4_7denj")
@@ -111,3 +114,20 @@ text = "'wasd' -> move"
 label_settings = SubResource("LabelSettings_g8ed8")
 horizontal_alignment = 1
 script = SubResource("GDScript_j5rps")
+
+[node name="Music" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("7_70id3")
+
+[node name="Melody" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("8_jk5km")
+autoplay = true
+bus = &"Music"
+
+[node name="Drums" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("9_imlaf")
+autoplay = true
+bus = &"Music"
+
+[connection signal="about_to_fight" from="." to="Music" method="_on_game_about_to_fight"]
+[connection signal="fight_ended" from="." to="Music" method="_on_game_fight_ended"]
