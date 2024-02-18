@@ -6,6 +6,7 @@ shader_type canvas_item;
 
 #include "smooth_pixel_filtering.gdshaderinc"
 
+uniform vec4 flash_color : source_color = vec4(0, 0, 0, 0);
 uniform vec4 color : source_color = vec4(1.0);
 uniform float width : hint_range(0, 10) = 1.0;
 uniform int pattern : hint_range(0, 2) = 0; // diamond, circle, square
@@ -63,6 +64,8 @@ void fragment() {
 	} else {
 		COLOR = texturePointSmooth(TEXTURE, uv, TEXTURE_PIXEL_SIZE);
 	}
+	
+	COLOR.rgb = mix(COLOR.rgb, flash_color.rgb, flash_color.a);
 
 	if ((COLOR.a > 0.0) == inside && hasContraryNeighbour(uv, TEXTURE_PIXEL_SIZE, image_top_left, image_bottom_right, TEXTURE)) {
 		COLOR.rgb = inside ? mix(COLOR.rgb, color.rgb, color.a) : color.rgb;

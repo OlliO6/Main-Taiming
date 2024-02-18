@@ -2,8 +2,8 @@ class_name Health
 extends Node
 
 signal health_changed(health: int)
-signal damaged(health: int)
-signal healed(health: int)
+signal damaged
+signal healed
 signal died
 
 @export var max_health: int = 10
@@ -20,11 +20,11 @@ func _ready() -> void:
 
 func take_damage(damage: int):
 	health -= damage
-	damaged.emit(damage)
+	damaged.emit()
 
 func heal(amount: int):
 	health += amount
-	healed.emit(amount)
+	healed.emit()
 
 func full_live() -> void:
 	health = max_health

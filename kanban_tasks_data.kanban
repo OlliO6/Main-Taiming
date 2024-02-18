@@ -15,15 +15,15 @@
 		{
 			"uuid": "050f6bf0-a900-45ce-a0f6-e8c406d10fb8",
 			"title": "Todo",
-			"tasks": []
+			"tasks": [
+				"5e25d970-c28b-48ed-bcc9-22f6c167f58e"
+			]
 		},
 		{
 			"uuid": "743dd046-28fd-4383-87d0-6da2bdadbaf2",
 			"title": "Doing",
 			"tasks": [
-				"3615ae91-deed-45b6-aab0-c5ed15339452",
-				"c2a719ad-eb31-4bb3-99cb-03311bc822cb",
-				"b1f4636b-5d40-47e6-81dd-72405d98459a"
+				"3615ae91-deed-45b6-aab0-c5ed15339452"
 			]
 		},
 		{
@@ -31,7 +31,9 @@
 			"title": "Done",
 			"tasks": [
 				"1a922e74-4c58-4b82-a368-118d2dd2753f",
-				"f846b7f6-b853-4304-b56c-54342e9ad606"
+				"c2a719ad-eb31-4bb3-99cb-03311bc822cb",
+				"f846b7f6-b853-4304-b56c-54342e9ad606",
+				"b9c80561-4b71-47b4-ae21-66f4946a28b4"
 			]
 		},
 		{
@@ -94,7 +96,7 @@
 				},
 				{
 					"details": "Ai",
-					"done": false
+					"done": true
 				},
 				{
 					"details": "Variations",
@@ -114,7 +116,7 @@
 				},
 				{
 					"details": "Fight",
-					"done": false
+					"done": true
 				},
 				{
 					"details": "Heal/Combine",
@@ -146,6 +148,20 @@
 		{
 			"uuid": "b8393da4-a97a-4e15-8629-edde75c3e002",
 			"title": "wegrennen wenn monster low",
+			"description": "",
+			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"steps": []
+		},
+		{
+			"uuid": "5e25d970-c28b-48ed-bcc9-22f6c167f58e",
+			"title": "Sounds",
+			"description": "",
+			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
+			"steps": []
+		},
+		{
+			"uuid": "b9c80561-4b71-47b4-ae21-66f4946a28b4",
+			"title": "Music",
 			"description": "",
 			"category": "d10394df-6562-4252-b8be-76436af5a0c4",
 			"steps": []

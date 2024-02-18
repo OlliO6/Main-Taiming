@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cwffmeeyd6sgu"]
+[gd_scene load_steps=35 format=3 uid="uid://cwffmeeyd6sgu"]
 
 [ext_resource type="Shader" path="res://shader/sheet_outline.gdshader" id="1_bxdlx"]
 [ext_resource type="Script" path="res://monster/monster.gd" id="1_e686l"]
@@ -11,6 +11,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1f0r"]
 shader = ExtResource("1_bxdlx")
+shader_parameter/flash_color = Color(0, 0, 0, 0)
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
 shader_parameter/pattern = 1
@@ -24,6 +25,7 @@ radius = 5.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nut2t"]
 resource_local_to_scene = true
 shader = ExtResource("1_bxdlx")
+shader_parameter/flash_color = Color(0, 0, 0, 0)
 shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
 shader_parameter/pattern = 1
@@ -68,6 +70,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite:material:shader_parameter/flash_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_uolog"]
@@ -207,9 +221,26 @@ tracks/2/keys = {
 "values": [Vector2(1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_bhybd"]
+resource_name = "damage"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:material:shader_parameter/flash_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.321569, 0.321569, 0), Color(1, 0, 0, 1), Color(0.87451, 0.317647, 0.317647, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b7nvd"]
 _data = {
 "RESET": SubResource("Animation_4lvg5"),
+"damage": SubResource("Animation_bhybd"),
 "feeded": SubResource("Animation_uolog"),
 "idle": SubResource("Animation_kxoce"),
 "knocked": SubResource("Animation_bpp4f"),
@@ -225,8 +256,14 @@ animation = &"feeded"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2sh73"]
 animation = &"knocked"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uiyxv"]
+animation = &"damage"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7yc8n"]
 animation = &"idle"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_hg34c"]
+mix_mode = 1
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_pdgt1"]
 filters = ["Sprite:rotation", "Sprite:scale", "Sprite:skew"]
@@ -247,23 +284,27 @@ input_2/auto_advance = false
 input_2/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_k2he7"]
-graph_offset = Vector2(-262.227, -17.7117)
+graph_offset = Vector2(-121.224, -13.0707)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_7yc8n")
 nodes/Animation/position = Vector2(40, -40)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_p6ptm")
 "nodes/Animation 2/position" = Vector2(-100, 100)
 "nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_nv6kw")
-"nodes/Animation 3/position" = Vector2(480, 220)
+"nodes/Animation 3/position" = Vector2(400, 220)
 "nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_2sh73")
 "nodes/Animation 4/position" = Vector2(40, 240)
+"nodes/Animation 5/node" = SubResource("AnimationNodeAnimation_uiyxv")
+"nodes/Animation 5/position" = Vector2(580, 400)
+nodes/damage/node = SubResource("AnimationNodeOneShot_hg34c")
+nodes/damage/position = Vector2(780, 260)
 nodes/feed/node = SubResource("AnimationNodeOneShot_pdgt1")
-nodes/feed/position = Vector2(660, 120)
-nodes/output/position = Vector2(860, 160)
+nodes/feed/position = Vector2(580, 120)
+nodes/output/position = Vector2(960, 300)
 nodes/run_speed/node = SubResource("AnimationNodeTimeScale_fyd0t")
 nodes/run_speed/position = Vector2(40, 100)
 nodes/state/node = SubResource("AnimationNodeTransition_cso2k")
 nodes/state/position = Vector2(240, 60)
-node_connections = [&"feed", 0, &"state", &"feed", 1, &"Animation 3", &"output", 0, &"feed", &"run_speed", 0, &"Animation 2", &"state", 0, &"Animation", &"state", 1, &"run_speed", &"state", 2, &"Animation 4"]
+node_connections = [&"damage", 0, &"feed", &"damage", 1, &"Animation 5", &"feed", 0, &"state", &"feed", 1, &"Animation 3", &"output", 0, &"damage", &"run_speed", 0, &"Animation 2", &"state", 0, &"Animation", &"state", 1, &"run_speed", &"state", 2, &"Animation 4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_db3bl"]
 radius = 11.0
@@ -358,6 +399,9 @@ libraries = {
 }
 tree_root = SubResource("AnimationNodeBlendTree_k2he7")
 anim_player = NodePath("../AnimationPlayer")
+parameters/damage/active = false
+parameters/damage/internal_active = false
+parameters/damage/request = 0
 parameters/feed/active = false
 parameters/feed/internal_active = false
 parameters/feed/request = 0
@@ -408,6 +452,7 @@ one_shot = true
 explosiveness = 1.0
 
 [connection signal="tamed" from="." to="TameParticles" method="restart"]
+[connection signal="damaged" from="Health" to="AnimationTree" method="set" binds= ["parameters/damage/request", 1]]
 [connection signal="died" from="Health" to="." method="_on_knockout"]
 [connection signal="deselected" from="Interactable" to="." method="_on_deselected"]
 [connection signal="interacted" from="Interactable" to="." method="_on_interacted"]

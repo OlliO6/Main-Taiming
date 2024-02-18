@@ -43,6 +43,8 @@ func _attack() -> void:
 		if health:
 			health.take_damage(damage)
 	
+	attcked.emit()
+	
 	ready_to_attack = false
 	is_attacking = false
 	_timer.timeout.connect(_get_ready, CONNECT_ONE_SHOT)

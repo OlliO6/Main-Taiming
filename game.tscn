@@ -118,6 +118,7 @@ script = SubResource("GDScript_j5rps")
 [node name="Music" type="Node" parent="."]
 process_mode = 3
 script = ExtResource("7_70id3")
+play_drums_at_room = 5
 
 [node name="Melody" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource("8_jk5km")
