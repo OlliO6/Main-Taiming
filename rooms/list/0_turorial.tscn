@@ -7,3 +7,5 @@
 
 [node name="Monster" parent="." index="2" instance=ExtResource("2_vjmem")]
 position = Vector2(0, -31)
+vegetables_needed = 3
+metadata/_edit_pinned_properties_ = [&"vegetables_needed"]

@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://components/state.gd" id="3_4420w"]
 [ext_resource type="Script" path="res://components/health.gd" id="3_xunb3"]
 [ext_resource type="Script" path="res://components/interactable.gd" id="4_jcere"]
-[ext_resource type="Texture2D" uid="uid://bh201qypfnlf7" path="res://monster/variations/monster.png" id="8_i5evf"]
+[ext_resource type="Texture2D" uid="uid://drdfa0jec62fw" path="res://monster/variations/monsters_16px.png" id="7_m30hk"]
 [ext_resource type="Texture2D" uid="uid://b72i575srys6a" path="res://monster/tame_particle.png" id="8_sljtx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1f0r"]
@@ -31,7 +31,7 @@ shader_parameter/width = 1.0
 shader_parameter/pattern = 1
 shader_parameter/inside = false
 shader_parameter/add_margins = true
-shader_parameter/number_of_images = Vector2(1, 1)
+shader_parameter/number_of_images = Vector2(2, 2)
 
 [sub_resource type="Animation" id="Animation_4lvg5"]
 length = 0.001
@@ -384,7 +384,9 @@ shape = SubResource("CircleShape2D_n66sg")
 [node name="Sprite" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_nut2t")
 position = Vector2(0, -5)
-texture = ExtResource("8_i5evf")
+texture = ExtResource("7_m30hk")
+hframes = 2
+vframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
