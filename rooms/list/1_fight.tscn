@@ -1,18 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://0oryk87ixyu2"]
 
 [ext_resource type="PackedScene" uid="uid://cepco1sn0sq6c" path="res://rooms/fight_room_base.tscn" id="1_lqpf6"]
-[ext_resource type="Script" path="res://rooms/monster_spawn_point.gd" id="2_o0c0t"]
+[ext_resource type="PackedScene" uid="uid://dpqfqovubbcjj" path="res://monster/variations/2.tscn" id="2_7t2ih"]
 
 [node name="FightRoom" instance=ExtResource("1_lqpf6")]
 
-[node name="Monster" type="Node2D" parent="SpawnPositions" index="1"]
-position = Vector2(-39, 0)
-script = ExtResource("2_o0c0t")
-
-[node name="Monster2" type="Node2D" parent="SpawnPositions" index="2"]
-position = Vector2(33, 0)
-script = ExtResource("2_o0c0t")
-
-[node name="Monster3" type="Node2D" parent="SpawnPositions" index="3"]
-position = Vector2(0, -17)
-script = ExtResource("2_o0c0t")
+[node name="BadMonster" parent="SpawnPositions" index="1"]
+possible_monster = Array[PackedScene]([ExtResource("2_7t2ih")])

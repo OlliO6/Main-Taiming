@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmcnx2p5gmx5j"]
+
+[ext_resource type="PackedScene" uid="uid://cepco1sn0sq6c" path="res://rooms/fight_room_base.tscn" id="1_sh4ea"]
+[ext_resource type="Script" path="res://rooms/bad_monster_spawn_point.gd" id="5_ycdxv"]
+[ext_resource type="PackedScene" uid="uid://dtjoe3hgrbo3p" path="res://monster/variations/3.tscn" id="6_hkrjp"]
+[ext_resource type="PackedScene" uid="uid://5bntft4da0sv" path="res://items/vegetables/basic_vegetable/basic_vegetable.tscn" id="7_62u6h"]
+
+[node name="FightRoom" instance=ExtResource("1_sh4ea")]
+layer_0/tile_data = PackedInt32Array(5, 131072, 2, -196603, 131072, 1, -262139, 131072, 1, -327675, 131072, 0, 4, 65536, 2, -65532, 65536, 1, -131068, 65536, 1, -196604, 65536, 1, -262140, 65536, 1, -327676, 196608, 1, 65539, 131072, 2, 3, 196608, 0, -65533, 65536, 1, -131069, 65536, 1, -196605, 65536, 1, -262141, 65536, 1, 131074, 131072, 2, 65538, 196608, 0, 2, 65536, 1, -65534, 65536, 1, -131070, 65536, 1, -196606, 65536, 1, -262142, 65536, 1, 131073, 65536, 2, 65537, 65536, 1, 1, 65536, 1, -65535, 65536, 1, -131071, 65536, 1, -196607, 65536, 1, -262143, 65536, 1, -327679, 65536, 1, 131072, 65536, 2, 65536, 65536, 1, 0, 65536, 1, -65536, 65536, 1, -131072, 65536, 1, -196608, 65536, 1, -262144, 65536, 1, -327680, 65536, 1, 131071, 65536, 1, 65535, 65536, 1, -1, 65536, 1, -65537, 65536, 1, -131073, 65536, 1, -196609, 65536, 1, -262145, 65536, 1, 196606, 0, 2, 131070, 262144, 0, 65534, 65536, 1, -2, 65536, 1, -65538, 65536, 1, -131074, 65536, 1, -196610, 65536, 1, -262146, 65536, 1, 131069, 65536, 2, 65533, 65536, 1, -3, 65536, 1, -65539, 65536, 1, -131075, 65536, 1, -196611, 65536, 1, -262147, 65536, 1, -327683, 196608, 1, 131068, 65536, 2, 65532, 65536, 1, -4, 65536, 1, -65540, 65536, 1, -131076, 65536, 1, -196612, 65536, 1, -262148, 65536, 1, 131067, 0, 2, 65531, 262144, 0, -5, 65536, 1, -65541, 65536, 1, -131077, 65536, 1, -196613, 65536, 1, -262149, 262144, 1, -6, 0, 1, -65531, 131072, 1, -131067, 131072, 1, -131078, 0, 1, 65530, 0, 2, -196614, 0, 1, -262150, 0, 0, -65542, 0, 1, -393214, 262144, 1, -327678, 65536, 1, -327677, 65536, 1, -393215, 65536, 0, -393216, 65536, 1, -327681, 65536, 1, -327682, 65536, 0, -458752, 65536, 0, -393217, 65536, 0, -327684, 65536, 1, -393220, 65536, 1, -393219, 131072, 1, -393221, 0, 1, -327685, 0, 1, -458756, 65536, 0, -458755, 131072, 0, -458757, 0, 0, -393213, 65536, 1, -458749, 65536, 1, -524285, 65536, 0, -524284, 131072, 0, -458748, 131072, 1, -393212, 131072, 1, -524286, 0, 0, -458750, 0, 1, 196607, 65536, 2)
+
+[node name="BadMonster" parent="SpawnPositions" index="1"]
+position = Vector2(56, -103)
+possible_monster = Array[PackedScene]([ExtResource("6_hkrjp")])
+
+[node name="BadMonster2" type="Node2D" parent="SpawnPositions" index="2"]
+position = Vector2(-56, -104)
+script = ExtResource("5_ycdxv")
+possible_monster = Array[PackedScene]([ExtResource("6_hkrjp")])
+
+[node name="Vegetable9" parent="Vegis" index="0" instance=ExtResource("7_62u6h")]
+position = Vector2(-74, -58)
+
+[node name="Vegetable7" parent="Vegis" index="1" instance=ExtResource("7_62u6h")]
+position = Vector2(-56, -104)
+
+[node name="Vegetable8" parent="Vegis" index="2" instance=ExtResource("7_62u6h")]
+position = Vector2(-55, -89)
+
+[node name="Vegetable2" parent="Vegis" index="3" instance=ExtResource("7_62u6h")]
+position = Vector2(71, -56)
+
+[node name="Vegetable3" parent="Vegis" index="4" instance=ExtResource("7_62u6h")]
+position = Vector2(-5, 23)
+
+[node name="Vegetable4" parent="Vegis" index="5" instance=ExtResource("7_62u6h")]
+position = Vector2(20, 23)
+
+[node name="Vegetable5" parent="Vegis" index="6" instance=ExtResource("7_62u6h")]
+position = Vector2(56, -88)
+
+[node name="Vegetable6" parent="Vegis" index="7" instance=ExtResource("7_62u6h")]
+position = Vector2(56, -103)

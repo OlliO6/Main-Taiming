@@ -22,7 +22,7 @@ shader_parameter/add_margins = true
 shader_parameter/number_of_images = Vector2(2, 2)
 
 [node name="Monster" instance=ExtResource("1_1omti")]
-vegetables_needed = 8
+vegetables_needed = 9
 follow_speed = 7.0
 in_team_outline_color = Color(0.545098, 0.690196, 0.380392, 0.301961)
 
@@ -30,7 +30,8 @@ in_team_outline_color = Color(0.545098, 0.690196, 0.380392, 0.301961)
 
 [node name="AttackArea" parent="DefaultFightLogic" index="0"]
 damage = 2
-time_between_attacks = 1.4
+attack_time = 0.4
+time_between_attacks = 1.6
 
 [node name="CollisionShape2D" parent="DefaultFightLogic/AttackArea" index="0"]
 shape = SubResource("CircleShape2D_qgrmk")

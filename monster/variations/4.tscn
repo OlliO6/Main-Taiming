@@ -20,7 +20,7 @@ shader_parameter/number_of_images = Vector2(2, 2)
 
 [node name="Monster" instance=ExtResource("1_mq21e")]
 vegetables_needed = 12
-follow_speed = 3.0
+follow_speed = 5.0
 in_team_outline_color = Color(0.545098, 0.690196, 0.380392, 0.301961)
 
 [node name="DefaultFightLogic" parent="." index="0" instance=ExtResource("2_osdc0")]

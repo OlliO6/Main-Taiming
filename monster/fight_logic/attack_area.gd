@@ -25,7 +25,8 @@ func _physics_process(delta: float) -> void:
 		_begin_attack()
 
 func _on_fight_started() -> void:
-	_timer.timeout.connect(_get_ready, CONNECT_ONE_SHOT)
+	if !_timer.timeout.is_connected(_get_ready):
+		_timer.timeout.connect(_get_ready, CONNECT_ONE_SHOT)
 	_timer.start(time_between_attacks)
 
 func _get_ready() -> void:
@@ -47,5 +48,6 @@ func _attack() -> void:
 	
 	ready_to_attack = false
 	is_attacking = false
-	_timer.timeout.connect(_get_ready, CONNECT_ONE_SHOT)
+	if !_timer.timeout.is_connected(_get_ready):
+		_timer.timeout.connect(_get_ready, CONNECT_ONE_SHOT)
 	_timer.start(time_between_attacks)
