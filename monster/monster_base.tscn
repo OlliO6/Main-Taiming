@@ -321,7 +321,7 @@ font_color = Color(0.94902, 0.941176, 0.898039, 1)
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.326733, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_a4sfw"]
+[sub_resource type="CurveTexture" id="CurveTexture_rh2mq"]
 curve = SubResource("Curve_w2uaq")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0burh"]
@@ -334,7 +334,7 @@ spread = 50.087
 initial_velocity_min = 0.15
 initial_velocity_max = 2.75
 gravity = Vector3(0, 0, 0)
-alpha_curve = SubResource("CurveTexture_a4sfw")
+alpha_curve = SubResource("CurveTexture_rh2mq")
 
 [node name="Monster" type="CharacterBody2D" groups=["monster"]]
 material = SubResource("ShaderMaterial_m1f0r")

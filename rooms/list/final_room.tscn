@@ -1,0 +1,386 @@
+[gd_scene load_steps=22 format=3 uid="uid://d1htqbiu0vncx"]
+
+[ext_resource type="PackedScene" uid="uid://cxo6oseo5rgfc" path="res://rooms/room_base.tscn" id="1_4e51w"]
+[ext_resource type="Script" path="res://components/interactable.gd" id="2_rykji"]
+[ext_resource type="Material" uid="uid://cw3n3jipn63eo" path="res://shader/standart_mat.tres" id="3_cce21"]
+[ext_resource type="Texture2D" uid="uid://dtmbocjiiebeh" path="res://monster/variations/door_monster/door_monster.png" id="4_pxhvb"]
+[ext_resource type="Texture2D" uid="uid://b72i575srys6a" path="res://monster/tame_particle.png" id="5_qeuf4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6xxpl"]
+size = Vector2(22, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m5wqx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jehai"]
+font_size = 8
+font_color = Color(0.94902, 0.941176, 0.898039, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_r3n27"]
+font_size = 6
+font_color = Color(0.94902, 0.941176, 0.898039, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xkiri"]
+size = Vector2(22, 10)
+
+[sub_resource type="GDScript" id="GDScript_2rt7c"]
+script/source = "extends Node2D
+
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+var active: bool
+var velocity:= Vector2.ZERO
+
+func activate() -> void:
+	active = true
+
+func _physics_process(delta: float) -> void:
+	if !active:
+		return
+	var player_pos:= Globals.player.position
+	smooth_move_towards(player_pos, 8, 0.1, 20, delta)
+	position += velocity * delta
+
+func smooth_move_towards(pos: Vector2, speed: float, damping: float, to_dist: float, delta: float) -> void:
+	
+	var target_velocity: Vector2
+	
+	if pos.distance_to(position) < to_dist:
+		animation_player.current_animation = \"idle\"
+		target_velocity = Vector2.ZERO
+	else:
+		animation_player.current_animation = \"run\"
+		var dir:= (pos - position).normalized()
+		target_velocity = dir * speed
+	
+	velocity = velocity.lerp(target_velocity, (1 - damping) * delta)
+"
+
+[sub_resource type="Animation" id="Animation_4lvg5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite:material:shader_parameter/flash_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_uolog"]
+resource_name = "feeded"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5),
+"transitions": PackedFloat32Array(1.62451, 2, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.8, 1.2), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_kxoce"]
+resource_name = "idle"
+length = 2.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.1, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.07, 0.93), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_bpp4f"]
+resource_name = "knocked"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.2, 0.8)]
+}
+
+[sub_resource type="Animation" id="Animation_4oew6"]
+resource_name = "run"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:skew")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.174533, 0.0, -0.174533, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.174533, 0.0, 0.174533, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_bhybd"]
+resource_name = "damage"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:material:shader_parameter/flash_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.321569, 0.321569, 0), Color(1, 0, 0, 1), Color(0.87451, 0.317647, 0.317647, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b7nvd"]
+_data = {
+"RESET": SubResource("Animation_4lvg5"),
+"damage": SubResource("Animation_bhybd"),
+"feeded": SubResource("Animation_uolog"),
+"idle": SubResource("Animation_kxoce"),
+"knocked": SubResource("Animation_bpp4f"),
+"run": SubResource("Animation_4oew6")
+}
+
+[sub_resource type="Curve" id="Curve_o65m5"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.326733, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_g3l3p"]
+curve = SubResource("Curve_o65m5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ijb7i"]
+lifetime_randomness = 0.39
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 28.5
+direction = Vector3(0, -1, 0)
+spread = 50.087
+initial_velocity_min = 0.15
+initial_velocity_max = 2.75
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_g3l3p")
+
+[node name="Room" instance=ExtResource("1_4e51w")]
+
+[node name="Door" parent="." index="0"]
+process_mode = 4
+visible = false
+
+[node name="DoorFrame" type="CharacterBody2D" parent="." index="2"]
+position = Vector2(0, -91)
+
+[node name="Interactable" type="Node" parent="DoorFrame" index="0"]
+script = ExtResource("2_rykji")
+
+[node name="Frame" type="Sprite2D" parent="DoorFrame" index="1"]
+material = ExtResource("3_cce21")
+texture = ExtResource("4_pxhvb")
+hframes = 2
+frame = 1
+
+[node name="DoorCollider" type="CollisionShape2D" parent="DoorFrame" index="2"]
+visible = false
+shape = SubResource("RectangleShape2D_6xxpl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorFrame" index="3"]
+visible = false
+position = Vector2(21, 0)
+shape = SubResource("RectangleShape2D_m5wqx")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="DoorFrame" index="4"]
+visible = false
+position = Vector2(-21, 0)
+shape = SubResource("RectangleShape2D_m5wqx")
+
+[node name="InteractLabel" type="Label" parent="DoorFrame" index="5"]
+visible = false
+offset_left = -20.0
+offset_top = 7.0
+offset_right = 21.0
+offset_bottom = 30.0
+text = "'e' to open"
+label_settings = SubResource("LabelSettings_jehai")
+horizontal_alignment = 1
+
+[node name="TeamExplanation" type="Label" parent="DoorFrame" index="6"]
+visible = false
+offset_left = -79.0
+offset_top = -16.0
+offset_right = 79.0
+offset_bottom = 7.0
+text = "You need at least 1 monster in your team"
+label_settings = SubResource("LabelSettings_r3n27")
+horizontal_alignment = 1
+
+[node name="EnterArea" type="Area2D" parent="DoorFrame" index="7"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorFrame/EnterArea" index="0"]
+visible = false
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_xkiri")
+disabled = true
+
+[node name="DoorMonster" type="Node2D" parent="." index="3"]
+position = Vector2(0, -91)
+script = SubResource("GDScript_2rt7c")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DoorMonster" index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_b7nvd")
+}
+autoplay = "RESET"
+playback_default_blend_time = 0.2
+
+[node name="Sprite" type="Sprite2D" parent="DoorMonster" index="1"]
+material = ExtResource("3_cce21")
+texture = ExtResource("4_pxhvb")
+region_enabled = true
+region_rect = Rect2(1, 0, 46, 40)
+
+[node name="TameParticles" type="GPUParticles2D" parent="DoorMonster/Sprite" index="0"]
+texture_filter = 1
+emitting = false
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_ijb7i")
+texture = ExtResource("5_qeuf4")
+lifetime = 3.8
+explosiveness = 0.74
+
+[connection signal="deselected" from="DoorFrame/Interactable" to="DoorFrame/InteractLabel" method="hide"]
+[connection signal="interacted" from="DoorFrame/Interactable" to="DoorFrame/InteractLabel" method="hide"]
+[connection signal="interacted" from="DoorFrame/Interactable" to="DoorMonster" method="activate"]
+[connection signal="interacted" from="DoorFrame/Interactable" to="DoorMonster/Sprite/TameParticles" method="restart"]
+[connection signal="interacted" from="DoorFrame/Interactable" to="DoorFrame/DoorCollider" method="set_disabled" binds= [true]]
+[connection signal="selected" from="DoorFrame/Interactable" to="DoorFrame/InteractLabel" method="show"]
+[connection signal="body_entered" from="DoorFrame/EnterArea" to="DoorFrame" method="_on_enter_area_body_entered"]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cepco1sn0sq6c"]
+[gd_scene load_steps=6 format=3 uid="uid://cepco1sn0sq6c"]
 
 [ext_resource type="PackedScene" uid="uid://cxo6oseo5rgfc" path="res://rooms/room_base.tscn" id="1_hudrr"]
 [ext_resource type="Script" path="res://rooms/bad_monster_spawn_point.gd" id="2_3yn7m"]
 [ext_resource type="Script" path="res://rooms/fight_room.gd" id="2_i3ay0"]
 [ext_resource type="PackedScene" uid="uid://ctd8a5v4lofwk" path="res://monster/variations/1.tscn" id="4_ii0kr"]
+[ext_resource type="PackedScene" uid="uid://5bntft4da0sv" path="res://items/vegetables/basic_vegetable/basic_vegetable.tscn" id="5_avuy3"]
 
 [node name="FightRoom" instance=ExtResource("1_hudrr")]
 script = ExtResource("2_i3ay0")
@@ -17,3 +18,23 @@ autostart = true
 position = Vector2(0, -52)
 script = ExtResource("2_3yn7m")
 possible_monster = Array[PackedScene]([ExtResource("4_ii0kr")])
+
+[node name="Vegis" type="Node2D" parent="." index="3"]
+
+[node name="Vegetable" parent="Vegis" index="0" instance=ExtResource("5_avuy3")]
+position = Vector2(-67, 4)
+
+[node name="Vegetable2" parent="Vegis" index="1" instance=ExtResource("5_avuy3")]
+position = Vector2(-40, 23)
+
+[node name="Vegetable3" parent="Vegis" index="2" instance=ExtResource("5_avuy3")]
+position = Vector2(24, 24)
+
+[node name="Vegetable4" parent="Vegis" index="3" instance=ExtResource("5_avuy3")]
+position = Vector2(36, 25)
+
+[node name="Vegetable5" parent="Vegis" index="4" instance=ExtResource("5_avuy3")]
+position = Vector2(50, 23)
+
+[node name="Vegetable6" parent="Vegis" index="5" instance=ExtResource("5_avuy3")]
+position = Vector2(69, 7)
