@@ -5,28 +5,31 @@ signal fight_started
 signal fight_ended
 signal about_to_fight
 
-const room_list_path:= "res://rooms/list/"
-
 @onready var camera: PhantomCamera2D = $Camera
 @onready var room_holder: Node2D = $RoomHolder
 @onready var player: Player = $Player
 
-enum GameState { FIGHT, PREPERATION, PAUSED, NOT_IN_GAME}
+@export var rooms: Array[PackedScene]
+
+enum GameState { FIGHT, PREPERATION, PAUSED, NOT_IN_GAME, ABOUT_TO_FIGHT }
 static  var game_state: GameState = GameState.NOT_IN_GAME
 
 var current_room: int
 
-var _room_files: PackedStringArray
-
 func _ready() -> void:
 	
-	Transitions.end_transition(Transitions.BLACK_FADE, 0.5, func():)
+	Transitions.end_transition.call_deferred(Transitions.BLACK_FADE, 0.5, func():)
 	
 	game_state = GameState.PREPERATION
 	
-	var rooms_dir:= DirAccess.open(room_list_path)
-	_room_files = rooms_dir.get_files()
+	#var rooms_dir:= DirAccess.open(room_list_path)
+	#rooms = []
+	#for f: String in rooms_dir.get_files():
+		#if f.ends_with(".tscn"):
+			#rooms.append(f)
+	
 	enter_room()
+	current_room = 10
 	Globals.team_changed.connect(_on_team_changed)
 
 func _exit_tree() -> void:
@@ -36,6 +39,7 @@ static func in_game() -> bool:
 	return game_state != GameState.NOT_IN_GAME
 
 func about_to_start_fight() -> void:
+	game_state = GameState.ABOUT_TO_FIGHT
 	about_to_fight.emit()
 
 func start_fight():
@@ -48,11 +52,11 @@ func end_fight():
 	
 func enter_room() -> void:
 	
-	if current_room >= _room_files.size():
+	if current_room >= rooms.size():
 		print("no more rooms")
 		return
 	
-	var room_scene:= load(room_list_path + _room_files[current_room]) as PackedScene
+	var room_scene:= rooms[current_room] as PackedScene
 	var room:= room_scene.instantiate() as Node2D
 	
 	for m in Globals.team:

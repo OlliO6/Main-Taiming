@@ -1,14 +1,33 @@
-[gd_scene load_steps=13 format=3 uid="uid://cgrh1rjccylef"]
+[gd_scene load_steps=32 format=3 uid="uid://cgrh1rjccylef"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_6c2l0"]
 [ext_resource type="PackedScene" uid="uid://cwlnn5fwd7frh" path="res://ui/ingame/ingame_overlay.tscn" id="1_lnhvx"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_r4gmu"]
+[ext_resource type="PackedScene" uid="uid://by54rrhq421bq" path="res://rooms/list/0_turorial.tscn" id="2_1ghaq"]
 [ext_resource type="PackedScene" uid="uid://c076y8slf1upt" path="res://player/player.tscn" id="2_5idx6"]
+[ext_resource type="PackedScene" uid="uid://0oryk87ixyu2" path="res://rooms/list/1_fight.tscn" id="3_hkysn"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2D.gd" id="3_vcs8i"]
+[ext_resource type="PackedScene" uid="uid://bru8yulyorpla" path="res://rooms/list/2_fight.tscn" id="4_5tcfe"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_7denj"]
+[ext_resource type="PackedScene" uid="uid://ump18le4w6e" path="res://rooms/list/3_fight.tscn" id="5_2suqa"]
+[ext_resource type="PackedScene" uid="uid://b0f5e0coed751" path="res://rooms/list/4_fight.tscn" id="6_jbkua"]
+[ext_resource type="PackedScene" uid="uid://d2n1hf61dyt2b" path="res://rooms/list/5_fight.tscn" id="7_7slph"]
 [ext_resource type="Script" path="res://music/music.gd" id="7_70id3"]
+[ext_resource type="PackedScene" uid="uid://bbcn3xj4kdgb0" path="res://rooms/list/6_bonus_room.tscn" id="8_8r2bo"]
 [ext_resource type="AudioStream" uid="uid://c0hp4uywtqmp4" path="res://music/chords_melody.mp3" id="8_jk5km"]
+[ext_resource type="PackedScene" uid="uid://deydxj17pcemv" path="res://rooms/list/7_fight.tscn" id="9_7whdw"]
 [ext_resource type="AudioStream" uid="uid://cesk8h2faf33o" path="res://music/drums.mp3" id="9_imlaf"]
+[ext_resource type="PackedScene" uid="uid://bmim44lydmr0l" path="res://rooms/list/8_fight.tscn" id="10_80l6n"]
+[ext_resource type="PackedScene" uid="uid://ds2nddjtjuvwt" path="res://rooms/list/9_fight.tscn" id="11_5vyhv"]
+[ext_resource type="PackedScene" uid="uid://bmcnx2p5gmx5j" path="res://rooms/list/a10_fight.tscn" id="12_3cree"]
+[ext_resource type="PackedScene" uid="uid://dkvw4t5xdgx2x" path="res://rooms/list/a11_fight.tscn" id="13_tjw0a"]
+[ext_resource type="PackedScene" uid="uid://llnt6hfjumfv" path="res://rooms/list/a12_bonus_room.tscn" id="14_eutll"]
+[ext_resource type="PackedScene" uid="uid://ds27int27iwd4" path="res://rooms/list/a13_fight.tscn" id="15_l86k8"]
+[ext_resource type="PackedScene" uid="uid://c77t8y1kefps4" path="res://rooms/list/a14_fight.tscn" id="16_ncxje"]
+[ext_resource type="PackedScene" uid="uid://3fjfdxxvdnq8" path="res://rooms/list/a15_fight.tscn" id="17_5vmkc"]
+[ext_resource type="PackedScene" uid="uid://bdaras78fpfwi" path="res://rooms/list/a16_fight.tscn" id="18_spopo"]
+[ext_resource type="PackedScene" uid="uid://83m4hbroj0g1" path="res://rooms/list/a17_final_fight.tscn" id="19_s1ga8"]
+[ext_resource type="PackedScene" uid="uid://d1htqbiu0vncx" path="res://rooms/list/final_room.tscn" id="20_5wtyv"]
 
 [sub_resource type="Resource" id="Resource_mrrpf"]
 script = ExtResource("4_7denj")
@@ -60,6 +79,7 @@ func _input(event: InputEvent) -> void:
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_6c2l0")
+rooms = Array[PackedScene]([ExtResource("2_1ghaq"), ExtResource("3_hkysn"), ExtResource("4_5tcfe"), ExtResource("5_2suqa"), ExtResource("6_jbkua"), ExtResource("7_7slph"), ExtResource("8_8r2bo"), ExtResource("9_7whdw"), ExtResource("10_80l6n"), ExtResource("11_5vyhv"), ExtResource("12_3cree"), ExtResource("13_tjw0a"), ExtResource("14_eutll"), ExtResource("15_l86k8"), ExtResource("16_ncxje"), ExtResource("17_5vmkc"), ExtResource("18_spopo"), ExtResource("19_s1ga8"), ExtResource("20_5wtyv")])
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -76,6 +96,56 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="ColorRect4" type="ColorRect" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="ColorRect5" type="ColorRect" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="ColorRect6" type="ColorRect" parent="CanvasLayer/GameOver"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
