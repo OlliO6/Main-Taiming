@@ -19,6 +19,11 @@ func allow_interaction() -> bool:
 	return !is_open && Game.game_state != Game.GameState.FIGHT
 
 func _on_interacted() -> void:
+	
+	if Game.game_state == Game.GameState.ABOUT_TO_FIGHT:
+		
+		return
+	
 	if Globals.team.size() < 1:
 		var explanation:= $TeamExplanation as Label
 		explanation.show()

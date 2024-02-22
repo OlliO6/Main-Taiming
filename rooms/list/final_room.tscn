@@ -121,6 +121,22 @@ tracks/3/keys = {
 "values": [Color(0, 0, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_bhybd"]
+resource_name = "damage"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:material:shader_parameter/flash_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.321569, 0.321569, 0), Color(1, 0, 0, 1), Color(0.87451, 0.317647, 0.317647, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_uolog"]
 resource_name = "feeded"
 length = 0.5
@@ -258,22 +274,6 @@ tracks/2/keys = {
 "values": [Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_bhybd"]
-resource_name = "damage"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:material:shader_parameter/flash_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 0.321569, 0.321569, 0), Color(1, 0, 0, 1), Color(0.87451, 0.317647, 0.317647, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b7nvd"]
 _data = {
 "RESET": SubResource("Animation_4lvg5"),
@@ -402,11 +402,11 @@ lifetime = 3.8
 explosiveness = 0.74
 
 [connection signal="deselected" from="DoorFrame/Interactable" to="DoorFrame/InteractLabel" method="hide"]
+[connection signal="interacted" from="DoorFrame/Interactable" to="DoorFrame/Frame/Frame2" method="hide"]
 [connection signal="interacted" from="DoorFrame/Interactable" to="DoorFrame/InteractLabel" method="hide"]
 [connection signal="interacted" from="DoorFrame/Interactable" to="DoorFrame/EnterArea" method="_on_interacted"]
 [connection signal="interacted" from="DoorFrame/Interactable" to="DoorMonster" method="activate"]
 [connection signal="interacted" from="DoorFrame/Interactable" to="DoorMonster/Sprite/TameParticles" method="restart"]
-[connection signal="interacted" from="DoorFrame/Interactable" to="DoorFrame/Frame/Frame2" method="hide"]
 [connection signal="selected" from="DoorFrame/Interactable" to="DoorFrame/InteractLabel" method="show"]
 [connection signal="timeout" from="DoorFrame/DoorCollider/Timer" to="DoorFrame/DoorCollider" method="set_disabled" binds= [true]]
 [connection signal="body_entered" from="DoorFrame/EnterArea" to="DoorFrame/EnterArea" method="_on_body_entered"]

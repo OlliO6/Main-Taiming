@@ -8,14 +8,9 @@
 [node name="FightRoom" instance=ExtResource("1_hudrr")]
 script = ExtResource("2_i3ay0")
 
-[node name="StartFightTimer" type="Timer" parent="." index="0"]
-wait_time = 3.0
-one_shot = true
-autostart = true
-
 [node name="BadMonster" type="Node2D" parent="SpawnPositions" index="1"]
 position = Vector2(0, -52)
 script = ExtResource("2_3yn7m")
 possible_monster = Array[PackedScene]([ExtResource("4_ii0kr")])
 
-[node name="Vegis" type="Node2D" parent="." index="3"]
+[node name="Vegis" type="Node2D" parent="." index="2"]

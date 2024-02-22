@@ -1,8 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://0oryk87ixyu2"]
+[gd_scene load_steps=6 format=3 uid="uid://0oryk87ixyu2"]
 
 [ext_resource type="PackedScene" uid="uid://cepco1sn0sq6c" path="res://rooms/fight_room_base.tscn" id="1_lqpf6"]
 [ext_resource type="PackedScene" uid="uid://dpqfqovubbcjj" path="res://monster/variations/2.tscn" id="2_7t2ih"]
 [ext_resource type="PackedScene" uid="uid://5bntft4da0sv" path="res://items/vegetables/basic_vegetable/basic_vegetable.tscn" id="3_rih4u"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7cjfx"]
+font_size = 13
+font_color = Color(0.94902, 0.941176, 0.898039, 1)
+
+[sub_resource type="GDScript" id="GDScript_leijb"]
+script/source = "extends Label
+
+func _ready() -> void:
+	Globals.get_game().fight_started.connect(func():
+		create_tween().tween_property(self, \"modulate:a\", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC))
+"
 
 [node name="FightRoom" instance=ExtResource("1_lqpf6")]
 
@@ -26,3 +38,13 @@ position = Vector2(50, 23)
 
 [node name="Vegetable6" parent="Vegis" index="5" instance=ExtResource("3_rih4u")]
 position = Vector2(69, 7)
+
+[node name="Label" type="Label" parent="." index="3"]
+offset_left = -76.0
+offset_top = -44.0
+offset_right = 75.0
+offset_bottom = -21.0
+text = "'space' -> ready"
+label_settings = SubResource("LabelSettings_7cjfx")
+horizontal_alignment = 1
+script = SubResource("GDScript_leijb")
