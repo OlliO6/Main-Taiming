@@ -82,6 +82,8 @@ start_fight={
 2d_physics/layer_3="items"
 2d_physics/layer_4="vegetables"
 2d_physics/layer_5="monsters"
+2d_physics/layer_6="monster_friendly"
+2d_physics/layer_7="place_border"
 
 [rendering]
 

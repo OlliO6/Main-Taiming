@@ -69,12 +69,20 @@ func _physics_process(delta: float) -> void:
 		fighting_state:
 			if following_player:
 				follow_player(delta)
+		
+		wait_state:
+			if following_player:
+				follow_player(delta)
+			else:
+				velocity = velocity.lerp(Vector2.ZERO, (1 - follow_damping) * delta)
+			
+			move_and_slide()
 
 func follow_player(delta: float):
 	
 	var player_pos:= Globals.player.position
 	smooth_move_towards(player_pos, follow_speed, follow_damping,\
-		follow_player_dist_fight if fighting_state.is_active() else follow_player_dist, delta)
+		follow_player_dist_fight if fighting_state.is_active() || wait_state.is_active() else follow_player_dist, delta)
 
 func smooth_move_towards(pos: Vector2, speed: float, damping: float, to_dist: float, delta: float) -> void:
 	
@@ -112,6 +120,8 @@ func finish_tame() -> void:
 	state_machine.switch_state(preperation_state)
 	health_interface.full_live()
 	tamed.emit()
+	set_collision_layer_value(6, true)
+	set_collision_mask_value(7, true)
 
 func is_feedable() -> bool:
 	match state_machine.state:
@@ -127,7 +137,7 @@ func is_feedable() -> bool:
 	return !health_interface.is_full_health()
 
 func _allow_interaction() -> bool:
-	if fighting_state.is_active() && !is_evil:
+	if (fighting_state.is_active() || wait_state.is_active()) && !is_evil:
 		return true
 	return taming_phase_2_state.is_active() || preperation_state.is_active()
 
@@ -156,7 +166,7 @@ func _on_interacted() -> void:
 			Globals.add_to_team(self)
 		interact_label.text = _get_interact_label_text()
 		
-	elif fighting_state.is_active():
+	elif fighting_state.is_active() || wait_state.is_active():
 		following_player = !following_player
 		(follow_started if following_player else follow_ended).emit()
 		interact_label.text = _get_interact_label_text()
@@ -166,7 +176,7 @@ func _on_interact_area_body_entered(body: Node2D) -> void:
 	if body is Vegetable:
 		if is_feedable():
 			feed(body)
-		elif health_interface.is_full_health():
+		elif health_interface.is_full_health() && !wait_state.is_active() && !is_evil:
 			create_tween().tween_property(health_label, "modulate:a", 0.0, 1).from(1.0)\
 				.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_EXPO)
 		return
@@ -182,6 +192,9 @@ func _get_interact_label_text() -> String:
 		fighting_state:
 			return "follow" if !following_player else "stop"
 		
+		wait_state:
+			return "follow" if !following_player else "stop"
+			
 	return ""
 
 func _on_state_switched(to_state: State, from_state: State) -> void:
@@ -232,7 +245,7 @@ func _on_knockout() -> void:
 	_set_anim_state("knocked")
 	defeaated.emit()
 	if is_in_team():
-			Globals.remove_from_team(self)
+		Globals.remove_from_team(self)
 
 func _on_knocked_out_state_exited() -> void:
 	health_label.hide()
@@ -241,6 +254,7 @@ func _on_knocked_out_state_exited() -> void:
 
 func _on_about_to_fight() -> void:
 	state_machine.switch_state(wait_state)
+	following_player = false
 	health_label.show()
 	_update_health_label.call_deferred(health_interface.max_health, health_interface.health, false)
 	_set_anim_state("idle")
@@ -248,7 +262,6 @@ func _on_about_to_fight() -> void:
 func _on_fight_started() -> void:
 	if (is_evil || is_in_team()) && !knocked_out_state.is_active():
 		state_machine.switch_state(fighting_state)
-		following_player = false
 	_update_health_label(health_interface.max_health, health_interface.health)
 
 func _on_fight_ended() -> void:

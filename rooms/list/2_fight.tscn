@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://bru8yulyorpla"]
+[gd_scene load_steps=7 format=3 uid="uid://bru8yulyorpla"]
 
 [ext_resource type="PackedScene" uid="uid://cepco1sn0sq6c" path="res://rooms/fight_room_base.tscn" id="1_0ogif"]
 [ext_resource type="PackedScene" uid="uid://dpqfqovubbcjj" path="res://monster/variations/2.tscn" id="2_2uqlv"]
 [ext_resource type="PackedScene" uid="uid://ctd8a5v4lofwk" path="res://monster/variations/1.tscn" id="2_slnj7"]
 [ext_resource type="PackedScene" uid="uid://5bntft4da0sv" path="res://items/vegetables/basic_vegetable/basic_vegetable.tscn" id="4_7ebs7"]
+[ext_resource type="Script" path="res://rooms/monster_place_border.gd" id="5_w38i0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i1lm4"]
+size = Vector2(212, 69)
 
 [node name="FightRoom" instance=ExtResource("1_0ogif")]
 
@@ -28,3 +32,11 @@ position = Vector2(50, 23)
 
 [node name="Vegetable6" parent="Vegis" index="5" instance=ExtResource("4_7ebs7")]
 position = Vector2(69, 7)
+
+[node name="MonsterPlaceBorder" type="StaticBody2D" parent="." index="3"]
+script = ExtResource("5_w38i0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MonsterPlaceBorder" index="0"]
+position = Vector2(0, -74)
+shape = SubResource("RectangleShape2D_i1lm4")
+debug_color = Color(0.701961, 0, 0.223529, 0.0745098)

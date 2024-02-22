@@ -10,6 +10,7 @@ signal about_to_fight
 @onready var player: Player = $Player
 
 @export var rooms: Array[PackedScene]
+@export var start_vegis: int = 5
 
 enum GameState { FIGHT, PREPERATION, PAUSED, NOT_IN_GAME, ABOUT_TO_FIGHT }
 static  var game_state: GameState = GameState.NOT_IN_GAME
@@ -17,6 +18,8 @@ static  var game_state: GameState = GameState.NOT_IN_GAME
 var current_room: int
 
 func _ready() -> void:
+	
+	Globals.vegetable_count = start_vegis
 	
 	Transitions.end_transition.call_deferred(Transitions.BLACK_FADE, 0.5, func():)
 	

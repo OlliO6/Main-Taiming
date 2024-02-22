@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://0oryk87ixyu2"]
+[gd_scene load_steps=8 format=3 uid="uid://0oryk87ixyu2"]
 
 [ext_resource type="PackedScene" uid="uid://cepco1sn0sq6c" path="res://rooms/fight_room_base.tscn" id="1_lqpf6"]
 [ext_resource type="PackedScene" uid="uid://dpqfqovubbcjj" path="res://monster/variations/2.tscn" id="2_7t2ih"]
 [ext_resource type="PackedScene" uid="uid://5bntft4da0sv" path="res://items/vegetables/basic_vegetable/basic_vegetable.tscn" id="3_rih4u"]
+[ext_resource type="PackedScene" uid="uid://c47gdecfmwuub" path="res://rooms/place_border.tscn" id="4_7km7m"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7cjfx"]
 font_size = 8
@@ -15,6 +16,9 @@ func _ready() -> void:
 	Globals.get_game().fight_started.connect(func():
 		create_tween().tween_property(self, \"modulate:a\", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC))
 "
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o7hvd"]
+size = Vector2(241, 59)
 
 [node name="FightRoom" instance=ExtResource("1_lqpf6")]
 
@@ -48,3 +52,10 @@ text = "'space' -> ready"
 label_settings = SubResource("LabelSettings_7cjfx")
 horizontal_alignment = 1
 script = SubResource("GDScript_leijb")
+
+[node name="PlaceBorder" parent="." index="4" instance=ExtResource("4_7km7m")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlaceBorder" index="0"]
+position = Vector2(-4.5, -62.5)
+shape = SubResource("RectangleShape2D_o7hvd")
+debug_color = Color(0.701961, 0, 0.254902, 0.027451)

@@ -14,7 +14,7 @@ var max_team: int = 3:
 		team_changed.emit()
 		max_team = v
 
-var vegetable_count: int = 500:
+var vegetable_count: int = 5:
 	set(v):
 		vegetable_count_changed.emit()
 		vegetable_count = v
