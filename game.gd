@@ -22,14 +22,7 @@ func _ready() -> void:
 	
 	game_state = GameState.PREPERATION
 	
-	#var rooms_dir:= DirAccess.open(room_list_path)
-	#rooms = []
-	#for f: String in rooms_dir.get_files():
-		#if f.ends_with(".tscn"):
-			#rooms.append(f)
-	
 	enter_room()
-	current_room = 10
 	Globals.team_changed.connect(_on_team_changed)
 
 func _exit_tree() -> void:

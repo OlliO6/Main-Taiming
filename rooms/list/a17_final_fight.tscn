@@ -1,39 +1,55 @@
-[gd_scene load_steps=7 format=3 uid="uid://83m4hbroj0g1"]
+[gd_scene load_steps=8 format=3 uid="uid://bdaras78fpfwi"]
 
-[ext_resource type="PackedScene" uid="uid://cepco1sn0sq6c" path="res://rooms/fight_room_base.tscn" id="1_cgpgl"]
-[ext_resource type="PackedScene" uid="uid://dtjoe3hgrbo3p" path="res://monster/variations/3.tscn" id="2_g0qdc"]
-[ext_resource type="PackedScene" uid="uid://emcmrhn7mm4c" path="res://monster/variations/4.tscn" id="3_pqa8g"]
-[ext_resource type="Script" path="res://rooms/bad_monster_spawn_point.gd" id="4_441vr"]
-[ext_resource type="Script" path="res://rooms/monster_spawn_point.gd" id="5_8h453"]
-[ext_resource type="PackedScene" uid="uid://5bntft4da0sv" path="res://items/vegetables/basic_vegetable/basic_vegetable.tscn" id="6_6sabd"]
+[ext_resource type="PackedScene" uid="uid://cepco1sn0sq6c" path="res://rooms/fight_room_base.tscn" id="1_443bq"]
+[ext_resource type="PackedScene" uid="uid://ctd8a5v4lofwk" path="res://monster/variations/1.tscn" id="2_v4j4l"]
+[ext_resource type="PackedScene" uid="uid://emcmrhn7mm4c" path="res://monster/variations/4.tscn" id="3_jtu5g"]
+[ext_resource type="PackedScene" uid="uid://dpqfqovubbcjj" path="res://monster/variations/2.tscn" id="3_yaaed"]
+[ext_resource type="Script" path="res://rooms/bad_monster_spawn_point.gd" id="4_dgnla"]
+[ext_resource type="Script" path="res://rooms/monster_spawn_point.gd" id="5_5100v"]
+[ext_resource type="PackedScene" uid="uid://5bntft4da0sv" path="res://items/vegetables/basic_vegetable/basic_vegetable.tscn" id="6_kan8d"]
 
-[node name="FightRoom" instance=ExtResource("1_cgpgl")]
-layer_0/tile_data = PackedInt32Array(65541, 131072, 2, 5, 131072, 1, -196603, 196608, 0, -262139, 65536, 1, -327675, 65536, 1, 131076, 131072, 2, 65540, 196608, 0, 4, 65536, 1, -65532, 65536, 1, -131068, 65536, 1, -196604, 65536, 1, -262140, 65536, 1, -327676, 65536, 1, 131075, 65536, 2, 65539, 65536, 1, 3, 65536, 1, -65533, 65536, 1, -131069, 65536, 1, -196605, 65536, 1, -262141, 65536, 1, 131074, 65536, 2, 65538, 65536, 1, 2, 65536, 1, -65534, 65536, 1, -131070, 65536, 1, -196606, 65536, 1, -262142, 65536, 1, 131073, 65536, 2, 65537, 65536, 1, 1, 65536, 1, -65535, 65536, 1, -131071, 65536, 1, -196607, 65536, 1, -262143, 65536, 1, -327679, 65536, 1, 131072, 65536, 2, 65536, 65536, 1, 0, 65536, 1, -65536, 65536, 1, -131072, 65536, 1, -196608, 65536, 1, -262144, 65536, 1, -327680, 65536, 1, 131071, 65536, 1, 65535, 65536, 1, -1, 65536, 1, -65537, 65536, 1, -131073, 65536, 1, -196609, 65536, 1, -262145, 65536, 1, 196606, 65536, 2, 131070, 65536, 1, 65534, 65536, 1, -2, 65536, 1, -65538, 65536, 1, -131074, 65536, 1, -196610, 65536, 1, -262146, 65536, 1, 196605, 65536, 2, 131069, 65536, 1, 65533, 65536, 1, -3, 65536, 1, -65539, 65536, 1, -131075, 65536, 1, -196611, 65536, 1, -262147, 65536, 1, -327683, 65536, 1, 196604, 65536, 2, 131068, 65536, 1, 65532, 65536, 1, -4, 65536, 1, -65540, 65536, 1, -131076, 65536, 1, -196612, 65536, 1, -262148, 65536, 1, 131067, 65536, 1, 65531, 65536, 1, -5, 65536, 1, -65541, 65536, 1, -131077, 65536, 1, -196613, 65536, 1, -262149, 65536, 1, -6, 65536, 1, -65531, 131072, 1, -131067, 131072, 1, -131078, 65536, 1, -196602, 131072, 2, 65530, 65536, 1, -196614, 65536, 1, -262150, 65536, 1, -65542, 65536, 1, -65543, 65536, 1, -7, 65536, 1, -131079, 65536, 1, 131066, 65536, 1, -196615, 65536, 1, -393214, 65536, 1, -327678, 65536, 1, -327677, 65536, 1, -393215, 65536, 1, -393216, 65536, 1, -327681, 65536, 1, -327682, 65536, 1, -458752, 65536, 1, -393217, 65536, 1, -262152, 0, 0, -196616, 0, 1, -131080, 0, 1, -65544, 0, 1, -8, 0, 1, 65528, 0, 1, 131064, 0, 2, -524295, 0, 0, -458759, 0, 1, -393223, 0, 1, -327687, 0, 1, -262151, 262144, 1, 65529, 65536, 1, 131065, 262144, 0, 196601, 0, 2, -589830, 0, 0, -524294, 262144, 1, -458758, 65536, 1, -393222, 65536, 1, -327686, 65536, 1, 196602, 65536, 2, -589829, 65536, 0, -524293, 65536, 1, -458757, 65536, 1, -393221, 65536, 1, -327685, 65536, 1, 196603, 65536, 2, -589828, 65536, 0, -524292, 65536, 1, -458756, 65536, 1, -393220, 65536, 1, -327684, 65536, 1, -589827, 131072, 0, -524291, 196608, 1, -458755, 65536, 1, -393219, 65536, 1, -524290, 65536, 0, -458754, 65536, 1, -393218, 65536, 1, -589825, 65536, 0, -524289, 65536, 1, -458753, 65536, 1, 196607, 65536, 2, -655360, 131072, 0, -589824, 196608, 1, -524288, 65536, 1, -589823, 65536, 0, -524287, 65536, 1, -458751, 65536, 1, -589822, 131072, 0, -524286, 196608, 1, -458750, 65536, 1, -524285, 65536, 0, -458749, 65536, 1, -393213, 65536, 1, -524284, 65536, 0, -458748, 65536, 1, -393212, 65536, 1, -524283, 131072, 0, -458747, 196608, 1, -393211, 65536, 1, -458746, 131072, 0, -393210, 131072, 1, -327674, 131072, 1, -262138, 131072, 1)
+[node name="FightRoom" instance=ExtResource("1_443bq")]
+layer_0/tile_data = PackedInt32Array(65541, 131072, 2, 5, 196608, 0, -196603, 65536, 1, -262139, 65536, 1, -327675, 65536, 1, 131076, 131072, 2, 65540, 196608, 0, 4, 65536, 1, -65532, 65536, 1, -131068, 65536, 1, -196604, 65536, 1, -262140, 65536, 1, -327676, 65536, 1, 131075, 65536, 2, 65539, 65536, 1, 3, 65536, 1, -65533, 65536, 1, -131069, 65536, 1, -196605, 65536, 1, -262141, 65536, 1, 131074, 65536, 2, 65538, 65536, 1, 2, 65536, 1, -65534, 65536, 1, -131070, 65536, 1, -196606, 65536, 1, -262142, 65536, 1, 131073, 65536, 2, 65537, 65536, 1, 1, 65536, 1, -65535, 65536, 1, -131071, 65536, 1, -196607, 65536, 1, -262143, 65536, 1, -327679, 65536, 1, 131072, 65536, 2, 65536, 65536, 1, 0, 65536, 1, -65536, 65536, 1, -131072, 65536, 1, -196608, 65536, 1, -262144, 65536, 1, -327680, 65536, 1, 131071, 65536, 1, 65535, 65536, 1, -1, 65536, 1, -65537, 65536, 1, -131073, 65536, 1, -196609, 65536, 1, -262145, 65536, 1, 196606, 65536, 2, 131070, 65536, 1, 65534, 65536, 1, -2, 65536, 1, -65538, 65536, 1, -131074, 65536, 1, -196610, 65536, 1, -262146, 65536, 1, 196605, 65536, 2, 131069, 65536, 1, 65533, 65536, 1, -3, 65536, 1, -65539, 65536, 1, -131075, 65536, 1, -196611, 65536, 1, -262147, 65536, 1, -327683, 65536, 1, 196604, 65536, 2, 131068, 65536, 1, 65532, 65536, 1, -4, 65536, 1, -65540, 65536, 1, -131076, 65536, 1, -196612, 65536, 1, -262148, 65536, 1, 131067, 65536, 1, 65531, 65536, 1, -5, 65536, 1, -65541, 65536, 1, -131077, 65536, 1, -196613, 65536, 1, -262149, 65536, 1, -6, 65536, 1, -65531, 65536, 1, -131067, 65536, 1, -131078, 65536, 1, -131066, 65536, 1, -65530, 65536, 1, -196602, 65536, 1, 65530, 65536, 1, -196614, 65536, 1, -262150, 65536, 1, 6, 65536, 2, -65542, 65536, 1, -65543, 65536, 1, -7, 65536, 1, -131079, 65536, 1, 131066, 65536, 1, -196615, 65536, 1, -393214, 65536, 1, -327678, 65536, 1, -327677, 65536, 1, -393215, 65536, 1, -393216, 65536, 1, -327681, 65536, 1, -327682, 65536, 1, -458752, 65536, 1, -393217, 65536, 1, -262152, 65536, 1, -196616, 65536, 1, -131080, 65536, 1, -65544, 65536, 1, -8, 65536, 1, 65528, 262144, 0, 131064, 0, 2, -524295, 65536, 0, -458759, 65536, 1, -393223, 65536, 1, -327687, 65536, 1, -262151, 65536, 1, 65529, 65536, 1, 131065, 262144, 0, 196601, 0, 2, -589830, 0, 0, -524294, 262144, 1, -458758, 65536, 1, -393222, 65536, 1, -327686, 65536, 1, 196602, 65536, 2, -589829, 65536, 0, -524293, 65536, 1, -458757, 65536, 1, -393221, 65536, 1, -327685, 65536, 1, 196603, 65536, 2, -589828, 65536, 0, -524292, 65536, 1, -458756, 65536, 1, -393220, 65536, 1, -327684, 65536, 1, -589827, 131072, 0, -524291, 196608, 1, -458755, 65536, 1, -393219, 65536, 1, -524290, 65536, 0, -458754, 65536, 1, -393218, 65536, 1, -589825, 65536, 0, -524289, 65536, 1, -458753, 65536, 1, 196607, 65536, 2, -655360, 131072, 0, -589824, 196608, 1, -524288, 65536, 1, -589823, 65536, 0, -524287, 65536, 1, -458751, 65536, 1, -589822, 65536, 0, -524286, 65536, 1, -458750, 65536, 1, -524285, 65536, 1, -458749, 65536, 1, -393213, 65536, 1, -524284, 65536, 1, -458748, 65536, 1, -393212, 65536, 1, -524283, 65536, 1, -458747, 65536, 1, -393211, 65536, 1, -458746, 65536, 1, -393210, 65536, 1, -327674, 65536, 1, -262138, 65536, 1, 65527, 65536, 2, -9, 65536, 1, -65545, 65536, 1, -131081, 65536, 1, -196617, 65536, 1, -262153, 65536, 1, -327689, 65536, 1, -393225, 262144, 1, -393224, 65536, 1, -327688, 65536, 1, -458760, 65536, 1, -458761, 0, 1, -393226, 0, 0, -327690, 0, 1, -262154, 0, 1, -196618, 0, 1, -131082, 0, 1, -65546, 0, 1, -10, 0, 1, 65526, 0, 2, 7, 131072, 2, -65529, 131072, 1, -131065, 131072, 1, -196601, 131072, 1, -262137, 131072, 1, -327673, 131072, 1, -393209, 131072, 1, -458745, 131072, 1, -524281, 131072, 0, -524282, 196608, 1, -589818, 131072, 0, -589819, 65536, 0, -589821, 65536, 0, -589820, 65536, 0, -524296, 65536, 0, -524297, 0, 0)
 
-[node name="Door" parent="." index="1"]
+[node name="Door" parent="." index="0"]
 position = Vector2(0, -140)
 
 [node name="Player" parent="SpawnPositions" index="0"]
-position = Vector2(-13, -53)
+position = Vector2(-14, -32)
 
 [node name="BadMonster" parent="SpawnPositions" index="1"]
-position = Vector2(3, -82)
-possible_monster = Array[PackedScene]([ExtResource("2_g0qdc"), ExtResource("3_pqa8g")])
+position = Vector2(32, -88)
+possible_monster = Array[PackedScene]([ExtResource("2_v4j4l"), ExtResource("3_yaaed")])
 
 [node name="BadMonster5" type="Node2D" parent="SpawnPositions" index="2"]
-position = Vector2(44, -84)
-script = ExtResource("4_441vr")
-possible_monster = Array[PackedScene]([ExtResource("2_g0qdc")])
+position = Vector2(64, -66)
+script = ExtResource("4_dgnla")
+possible_monster = Array[PackedScene]([ExtResource("2_v4j4l"), ExtResource("3_yaaed")])
 
 [node name="BadMonster3" type="Node2D" parent="SpawnPositions" index="3"]
-position = Vector2(-76, -81)
-script = ExtResource("4_441vr")
-possible_monster = Array[PackedScene]([ExtResource("2_g0qdc")])
+position = Vector2(-68, -90)
+script = ExtResource("4_dgnla")
+possible_monster = Array[PackedScene]([ExtResource("2_v4j4l"), ExtResource("3_yaaed")])
 
-[node name="BadMonster2" type="Node2D" parent="SpawnPositions" index="4"]
-position = Vector2(-37, -80)
-script = ExtResource("4_441vr")
-possible_monster = Array[PackedScene]([ExtResource("2_g0qdc"), ExtResource("3_pqa8g")])
+[node name="BadMonster4" type="Node2D" parent="SpawnPositions" index="4"]
+position = Vector2(-101, -69)
+script = ExtResource("4_dgnla")
+possible_monster = Array[PackedScene]([ExtResource("2_v4j4l"), ExtResource("3_yaaed")])
+
+[node name="BadMonster2" type="Node2D" parent="SpawnPositions" index="5"]
+position = Vector2(-18, -101)
+script = ExtResource("4_dgnla")
+possible_monster = Array[PackedScene]([ExtResource("2_v4j4l"), ExtResource("3_yaaed")])
+
+[node name="BadMonster6" type="Node2D" parent="SpawnPositions" index="6"]
+position = Vector2(-33, -70)
+script = ExtResource("4_dgnla")
+possible_monster = Array[PackedScene]([ExtResource("3_jtu5g")])
+
+[node name="BadMonster7" type="Node2D" parent="SpawnPositions" index="7"]
+position = Vector2(-3, -69)
+script = ExtResource("4_dgnla")
+possible_monster = Array[PackedScene]([ExtResource("3_jtu5g")])
 
 [node name="Monster" parent="SpawnPositions/Team" index="0"]
 position = Vector2(2, -10)
@@ -46,25 +62,25 @@ position = Vector2(-78, -9)
 
 [node name="Monster3" type="Node2D" parent="SpawnPositions/Team" index="3"]
 position = Vector2(-35, -8)
-script = ExtResource("5_8h453")
+script = ExtResource("5_5100v")
 
-[node name="Vegetable9" parent="Vegis" index="0" instance=ExtResource("6_6sabd")]
-position = Vector2(-103, -54)
+[node name="Vegetable9" parent="Vegis" index="0" instance=ExtResource("6_kan8d")]
+position = Vector2(-134, -82)
 
-[node name="Vegetable7" parent="Vegis" index="1" instance=ExtResource("6_6sabd")]
+[node name="Vegetable7" parent="Vegis" index="1" instance=ExtResource("6_kan8d")]
 position = Vector2(-73, -135)
 
-[node name="Vegetable8" parent="Vegis" index="2" instance=ExtResource("6_6sabd")]
+[node name="Vegetable8" parent="Vegis" index="2" instance=ExtResource("6_kan8d")]
 position = Vector2(-55, -136)
 
-[node name="Vegetable2" parent="Vegis" index="3" instance=ExtResource("6_6sabd")]
-position = Vector2(-104, -26)
+[node name="Vegetable2" parent="Vegis" index="3" instance=ExtResource("6_kan8d")]
+position = Vector2(-135, -54)
 
-[node name="Vegetable3" parent="Vegis" index="4" instance=ExtResource("6_6sabd")]
-position = Vector2(-104, 6)
+[node name="Vegetable3" parent="Vegis" index="4" instance=ExtResource("6_kan8d")]
+position = Vector2(-135, -22)
 
-[node name="Vegetable5" parent="Vegis" index="5" instance=ExtResource("6_6sabd")]
-position = Vector2(88, -56)
+[node name="Vegetable5" parent="Vegis" index="5" instance=ExtResource("6_kan8d")]
+position = Vector2(98, -46)
 
-[node name="Vegetable6" parent="Vegis" index="6" instance=ExtResource("6_6sabd")]
-position = Vector2(89, -86)
+[node name="Vegetable6" parent="Vegis" index="6" instance=ExtResource("6_kan8d")]
+position = Vector2(100, -96)
